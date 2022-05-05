@@ -1,3 +1,8 @@
+@import url("https://fonts.googleapis.com/css2?family=Goldman:wght@400;700&display=swap");
+body {
+  font-family: "Goldman", cursive !important;
+}
+
 .whiteText {
   color: white !important;
 }
@@ -5,15 +10,48 @@
 /* Navbar classes */
 
 .navLogo {
-  width: 4rem;
-  height: 4rem;
+  width: 3rem;
+  height: 3rem;
   color: white;
 }
 
 .navIcons {
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   color: white;
 }
 
 /* Navbar classes */
+
+.salePic {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.footerLogo {
+  width: 3rem;
+  height: 3rem;
+  color: Black;
+}
+
+.footerContainer {
+  background-color: aqua;
+}
+
+.corporation {
+  font-size: 0.65rem;
+  font-weight: 200;
+}
+.footerLink {
+  font-size: 0.8rem;
+  font-weight: 200;
+}
+
+.addToCart {
+  color: white;
+  border-radius: 60px;
+}
+.overflowHidden {
+  overflow: hidden;
+}

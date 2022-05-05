@@ -1,18 +1,20 @@
 import { Container, Navbar, Form, Nav, FormControl } from "react-bootstrap";
-import logo from "../images/pngaaa.com-2483209.png";
+import logo from "../images/logo.png";
 import { BsPersonCircle, BsCartPlus, BsPercent } from "react-icons/bs";
 import { MdOutlineLocalOffer } from "react-icons/md";
-import { FaPercent } from "react-icons/fa";
 
 const MyNavbar = () => {
   return (
     <Navbar bg="dark" expand="sm" className="px-0 py-0" sticky="top">
       <Container>
-        <Navbar.Brand href="#" className="whiteText">
-          <img src={logo} alt="" className="navLogo py-1" />
+        <Navbar.Brand href="#" className="mr-5">
+          <div className="d-flex flex-column align-items-center">
+            <img src={logo} alt="" className="navLogo py-1" />
+            <p className="my-0 whiteText">The Genie Shop</p>
+          </div>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse id="navbarScroll" className="whiteText">
+        <Navbar.Collapse id="navbarScroll" className="whiteText ml-3">
           <Nav.Link href="#action1" className="whiteText">
             <MdOutlineLocalOffer className="navIcons" />
           </Nav.Link>
