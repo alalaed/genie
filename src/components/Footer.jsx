@@ -3,12 +3,12 @@ import logo from "../images/logo.png";
 
 const Footer = () => {
   return (
-    <Container fluid className="bg-dark whiteText">
+    <Container fluid className="bg-dark whiteText ">
       <Container>
         <div>
           <div className="d-flex align-items-center  ">
             <img src={logo} alt="" className="footerLogo py-1" />
-            <p className=" ml-2 my-0 ">The Genie Shop</p>
+            <p className=" ml-2 my-0 footerBrand">The Genie Shop</p>
           </div>
 
           <Row>
@@ -22,7 +22,7 @@ const Footer = () => {
           </Row>
           <Row>
             <Col>
-              <p className="corporation my-4">The Genie Shop © 2022</p>
+              <p className="corporation mb-4">The Genie Shop © 2022</p>
             </Col>
           </Row>
         </div>

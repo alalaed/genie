@@ -30,9 +30,13 @@ body {
 }
 
 .footerLogo {
-  width: 3rem;
-  height: 3rem;
+  width: 2rem;
+  height: 2rem;
   color: Black;
+}
+
+.footerBrand {
+  font-size: 0.8rem;
 }
 
 .footerContainer {
@@ -40,11 +44,11 @@ body {
 }
 
 .corporation {
-  font-size: 0.65rem;
+  font-size: 0.5rem;
   font-weight: 200;
 }
 .footerLink {
-  font-size: 0.8rem;
+  font-size: 0.65rem;
   font-weight: 200;
 }
 

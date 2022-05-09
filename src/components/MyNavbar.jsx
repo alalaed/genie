@@ -2,16 +2,19 @@ import { Container, Navbar, Form, Nav, FormControl } from "react-bootstrap";
 import logo from "../images/logo.png";
 import { BsPersonCircle, BsCartPlus, BsPercent } from "react-icons/bs";
 import { MdOutlineLocalOffer } from "react-icons/md";
+import { Link, useNavigate } from "react-router-dom";
 
 const MyNavbar = () => {
   return (
     <Navbar bg="dark" expand="sm" className="px-0 py-0" sticky="top">
       <Container>
         <Navbar.Brand href="#" className="mr-5">
-          <div className="d-flex flex-column align-items-center">
-            <img src={logo} alt="" className="navLogo py-1" />
-            <p className="my-0 whiteText">The Genie Shop</p>
-          </div>
+          <Link to={"/"} style={{ textDecoration: "none" }}>
+            <div className="d-flex flex-column align-items-center">
+              <img src={logo} alt="" className="navLogo py-1" />
+              <p className="my-0 whiteText">The Genie Shop</p>
+            </div>
+          </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll" className="whiteText ml-3">
