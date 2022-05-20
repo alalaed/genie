@@ -3,33 +3,33 @@ import { useState } from "react";
 import { MdModeEdit } from "react-icons/md";
 import { BsTrash } from "react-icons/bs";
 import { RiArrowDownSFill } from "react-icons/ri";
+import { MdDone } from "react-icons/md";
 import { updateCategory } from "../utils/category";
 import { toast } from "react-toastify";
-import { useEffect } from "react";
-import { deleteCategory } from "../utils/category";
 
 const Openable = ({ _id, name, slug, token, handleRemove }) => {
   const [disabled, setDisabled] = useState(true);
-  const [category, setCategory] = useState(name);
+  const [newName, setNewName] = useState("");
 
-  const handleUpdate = () => {
-    console.log("this is the category" + typeof category);
+  const enable = () => {
+    setDisabled(!disabled);
+  };
 
-    updateCategory(slug, { name: category }, token)
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    // setLoading(true);
+    updateCategory(slug, { name: newName }, token)
       .then((res) => {
-        console.log(`"${res.data.name}" is updated !`);
-        setDisabled(!disabled);
-        // loadCategories();
+        // setLoading(false);
+        // setName("");
+        toast.success(`"${res.data.name}" is updated !`);
+        // navigate("/admin/category");
       })
       .catch((err) => {
         console.log(err);
+        // setLoading(false);
         if (err.response.status === 400) toast.error(err.response.data);
       });
-  };
-
-  const enable = (e) => {
-    e.preventDefault();
-    setDisabled(!disabled);
   };
 
   return (
@@ -38,10 +38,10 @@ const Openable = ({ _id, name, slug, token, handleRemove }) => {
         <Col md={8}>
           <Form.Group className="mb-3 w-100">
             <Form.Control
-              placeholder={category}
-              value={category}
+              placeholder={name}
               disabled={disabled}
-              onChange={(e) => setCategory(e.target.value)}
+              value={name}
+              onChange={(e) => setNewName(e.target.value)}
             />
           </Form.Group>
         </Col>
@@ -67,12 +67,8 @@ const Openable = ({ _id, name, slug, token, handleRemove }) => {
           {disabled ? (
             <></>
           ) : (
-            <Button
-              variant="success"
-              className="float-left mr-3"
-              onClick={() => handleUpdate()}
-            >
-              <RiArrowDownSFill />
+            <Button variant="success" className="float-left mr-3">
+              <MdDone />
             </Button>
           )}
         </Col>

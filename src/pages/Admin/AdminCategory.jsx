@@ -83,9 +83,9 @@ const AdminCategory = () => {
   };
 
   const filtered = (query) => (q) => q.name.toLowerCase().includes(query);
-  const enable = () => {
-    setDisabled(!disabled);
-  };
+  // const enable = () => {
+  //   setDisabled(!disabled);
+  // };
 
   return (
     <Container>
@@ -130,6 +130,7 @@ const AdminCategory = () => {
                   slug={c.slug}
                   token={token}
                   handleRemove={handleRemove}
+                  loadCategories={loadCategories}
                 />
               ))}
             </ListGroup>
