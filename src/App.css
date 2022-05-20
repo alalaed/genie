@@ -59,3 +59,8 @@ body {
 .overflowHidden {
   overflow: hidden;
 }
+
+.sidebar-outer {
+  height: calc(100vh - 24px);
+  color: white;
+}

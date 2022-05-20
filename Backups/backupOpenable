@@ -1,0 +1,86 @@
+import { Button, Collapse, ListGroup, Form, Row, Col } from "react-bootstrap";
+import { useState } from "react";
+import { MdModeEdit } from "react-icons/md";
+import { BsTrash } from "react-icons/bs";
+import { RiArrowDownSFill } from "react-icons/ri";
+import { updateCategory } from "../utils/category";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
+
+const Openable = ({ _id, name, slug, token, handleRemove, loadCategories }) => {
+  const [disabled, setDisabled] = useState(true);
+  const [category, setCategory] = useState(name);
+
+  const handleUpdate = () => {
+    console.log("this is the category" + typeof category);
+
+    updateCategory(slug, { name: category }, token)
+      .then((res) => {
+        console.log(`"${res.data.name}" is updated !`);
+        setDisabled(!disabled);
+        loadCategories();
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status === 400) toast.error(err.response.data);
+      });
+  };
+
+  const enable = (e) => {
+    e.preventDefault();
+    setDisabled(!disabled);
+  };
+
+  // useEffect(() => {
+  //   loadCategories();
+  // }, []);
+
+  return (
+    <ListGroup.Item key={_id} className="mt-3">
+      <Row>
+        <Col md={8}>
+          <Form.Group className="mb-3 w-100">
+            <Form.Control
+              placeholder={category}
+              value={category}
+              disabled={disabled}
+              onChange={(e) => setCategory(e.target.value)}
+            />
+          </Form.Group>
+        </Col>
+        <Col md={4} className="pl-0">
+          <Button
+            variant="danger"
+            onClick={() => handleRemove(slug)}
+            className="float-right"
+          >
+            <BsTrash />
+          </Button>
+          <Button
+            variant="warning"
+            className="float-right mr-3"
+            onClick={enable}
+          >
+            <MdModeEdit />
+          </Button>
+          <Button variant="primary" className="float-right mr-3">
+            <RiArrowDownSFill />
+          </Button>
+
+          {disabled ? (
+            <></>
+          ) : (
+            <Button
+              variant="success"
+              className="float-left mr-3"
+              onClick={() => handleUpdate()}
+            >
+              <RiArrowDownSFill />
+            </Button>
+          )}
+        </Col>
+      </Row>
+    </ListGroup.Item>
+  );
+};
+export default Openable;

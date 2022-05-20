@@ -1,46 +1,104 @@
-import { Container, Navbar, Form, Nav, FormControl } from "react-bootstrap";
+import {
+  Container,
+  Navbar,
+  Form,
+  Nav,
+  FormControl,
+  NavDropdown,
+} from "react-bootstrap";
 import logo from "../images/logo.png";
 import { BsPersonCircle, BsCartPlus, BsPercent } from "react-icons/bs";
 import { MdOutlineLocalOffer } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const MyNavbar = () => {
+  const user = useSelector((state) => state.userReducer?.user.role[0]);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const logOut = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("user");
+    dispatch({ type: "LOGOUT", payload: null });
+    navigate("/");
+  };
+
   return (
-    <Navbar bg="dark" expand="sm" className="px-0 py-0" sticky="top">
-      <Container>
-        <Navbar.Brand href="#" className="mr-5">
-          <Link to={"/"} style={{ textDecoration: "none" }}>
-            <div className="d-flex flex-column align-items-center">
-              <img src={logo} alt="" className="navLogo py-1" />
-              <p className="my-0 whiteText">The Genie Shop</p>
-            </div>
-          </Link>
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbarScroll" />
-        <Navbar.Collapse id="navbarScroll" className="whiteText ml-3">
-          <Nav.Link href="#action1" className="whiteText">
-            <MdOutlineLocalOffer className="navIcons" />
-          </Nav.Link>
-          <Nav.Link href="#action2" className="whiteText">
-            <BsPercent className="navIcons" />
-          </Nav.Link>
-          <Form className=" d-flex w-50 ml-1">
-            <FormControl
-              type="search"
-              placeholder="Search"
-              className="me-2"
-              aria-label="Search"
-            />
-          </Form>
-        </Navbar.Collapse>
-        <div className="d-flex flex-column align-items-center px-1 ml-3 ">
-          <BsPersonCircle className="navIcons" />
-        </div>
-        <div className="d-flex flex-column align-items-center px-1 ml-3 ">
-          <BsCartPlus className="navIcons" />
-        </div>
-      </Container>
-    </Navbar>
+    <Container>
+      <Navbar bg="dark" expand="sm" className="px-0 py-0" sticky="top">
+        <Container>
+          <Navbar.Brand href="#" className="mr-5">
+            <Link to={"/"} style={{ textDecoration: "none" }}>
+              <div className="d-flex flex-column align-items-center">
+                <img src={logo} alt="" className="navLogo py-1" />
+                <p className="my-0 whiteText">The Genie Shop</p>
+              </div>
+            </Link>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbarScroll" />
+          <Navbar.Collapse id="navbarScroll" className="whiteText ml-3">
+            <Nav.Link href="#action1" className="whiteText">
+              <MdOutlineLocalOffer className="navIcons" />
+            </Nav.Link>
+            <Nav.Link href="#action2" className="whiteText">
+              <BsPercent className="navIcons" />
+            </Nav.Link>
+            <Form className=" d-flex w-50 ml-1">
+              <FormControl
+                type="search"
+                placeholder="Search"
+                className="me-2"
+                aria-label="Search"
+              />
+            </Form>
+          </Navbar.Collapse>
+          {/* <div className="d-flex flex-column align-items-center px-1 ml-3 ">
+            <Link to={"/login"}>
+              <BsPersonCircle className="navIcons" />
+            </Link>
+          </div> */}
+          <div className="d-flex flex-column align-items-center px-1 ml-3 ">
+            <BsCartPlus className="navIcons" />
+          </div>
+
+          <NavDropdown
+            title={<BsPersonCircle className="navIcons" />}
+            id="basic-nav-dropdown"
+          >
+            {!user && (
+              <NavDropdown.Item>
+                <Link to={"/login"}>Login</Link>
+              </NavDropdown.Item>
+            )}
+            {user && (
+              <>
+                <NavDropdown.Item>
+                  {user === "User" && (
+                    <Link to="/user-dashboard" style={{ color: "black" }}>
+                      Dashboard
+                    </Link>
+                  )}
+
+                  {user === "Admin" && (
+                    <Link to="/admin-dashboard" style={{ color: "black" }}>
+                      Dashboard
+                    </Link>
+                  )}
+                </NavDropdown.Item>
+                <NavDropdown.Item onClick={logOut}>Logout</NavDropdown.Item>
+              </>
+            )}
+            {!user && (
+              <NavDropdown.Item>
+                <Link to={"/register"}>Register</Link>
+              </NavDropdown.Item>
+            )}
+          </NavDropdown>
+        </Container>
+      </Navbar>
+    </Container>
   );
 };
 

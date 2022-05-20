@@ -1,7 +1,7 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const Sale = () => {
+const Sale = ({ products }) => {
   return (
     <Container className="mb-5 px-3">
       <Row>
