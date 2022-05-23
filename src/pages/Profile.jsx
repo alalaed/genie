@@ -24,6 +24,8 @@ const Profile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     updateUser(userData, userToken);
+    setName(name);
+    setSurname(surname);
   };
   return (
     <Container>

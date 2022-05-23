@@ -20,7 +20,7 @@ import {
 import { useSelector } from "react-redux";
 import { BsTrash } from "react-icons/bs";
 import { MdModeEdit } from "react-icons/md";
-import Openable from "../../components/Openable";
+import AdminCategorySlot from "../../components/AdminCategorySlot";
 
 const AdminCategory = () => {
   const [name, setName] = useState("");
@@ -79,7 +79,7 @@ const AdminCategory = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setQuery(e.target.value).toLowerCase();
+    setQuery(e.target.value.toLowerCase());
   };
 
   const filtered = (query) => (q) => q.name.toLowerCase().includes(query);
@@ -124,7 +124,7 @@ const AdminCategory = () => {
 
             <ListGroup>
               {categories.filter(filtered(query)).map((c) => (
-                <Openable
+                <AdminCategorySlot
                   _id={c._id}
                   name={c.name}
                   slug={c.slug}

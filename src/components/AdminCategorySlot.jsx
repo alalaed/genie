@@ -8,7 +8,13 @@ import { updateCategory } from "../utils/category";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 
-const Openable = ({ _id, name, slug, handleRemove, loadCategories }) => {
+const AdminCategorySlot = ({
+  _id,
+  name,
+  slug,
+  handleRemove,
+  loadCategories,
+}) => {
   const [disabled, setDisabled] = useState(true);
   const [newName, setNewName] = useState("");
   const [open, setOpen] = useState(false);
@@ -101,4 +107,4 @@ const Openable = ({ _id, name, slug, handleRemove, loadCategories }) => {
     </ListGroup.Item>
   );
 };
-export default Openable;
+export default AdminCategorySlot;

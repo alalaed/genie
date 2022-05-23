@@ -17,9 +17,7 @@ import AdminProfile from "./pages/Admin/AdminProfile";
 import Search from "./pages/Search";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminCategory from "./pages/Admin/AdminCategory";
-import AdminCategoryUpdate from "./pages/Admin/AdminCategoryUpdate";
 import AdminSubcategory from "./pages/Admin/AdminSubcategory";
-import Openable from "./components/Openable";
 
 const App = () => {
   useEffect(() => {}, []);
@@ -39,11 +37,6 @@ const App = () => {
           <Route path="/admin/profile" element={<AdminProfile />} />
           <Route path="/admin/category" element={<AdminCategory />} />
           <Route path="/admin/subcategory" element={<AdminSubcategory />} />
-          <Route path="/test" element={<Openable />} />
-          <Route
-            path="/admin/category/:slug"
-            element={<AdminCategoryUpdate />}
-          />
         </Routes>
         <div className="mt-auto">
           <Footer />
