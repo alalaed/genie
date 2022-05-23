@@ -13,12 +13,16 @@ export const deleteSubcategory = async (slug, token) =>
     },
   });
 
-export const updateSubcategory = async (slug, subcategory, token) =>
+export const updateSubcategory = async (slug, subcategory, token) => {
+  console.log(" backend this is the slug" + slug);
+  console.log(" backend this is the subcategory" + typeof subcategory);
+  console.log(" backend this is the token" + token);
   await axios.put(`http://localhost:3001/subcategory/${slug}`, subcategory, {
     headers: {
       authorization: token,
     },
   });
+};
 
 export const createSubcategory = async (subcategory, token) =>
   await axios.post(`http://localhost:3001/subcategory/`, subcategory, {
