@@ -7,6 +7,7 @@ import { MdDone } from "react-icons/md";
 import { updateCategory } from "../utils/category";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import SubOpen from "./SubOpen";
 
 const AdminCategorySlot = ({
   _id,
@@ -18,11 +19,16 @@ const AdminCategorySlot = ({
   const [disabled, setDisabled] = useState(true);
   const [newName, setNewName] = useState("");
   const [open, setOpen] = useState(false);
+  const [subOpen, setSubOpen] = useState(false);
   const token = useSelector((state) => state.userReducer?.accessToken);
 
   const enable = () => {
     setDisabled(!disabled);
     setOpen(!open);
+  };
+
+  const subEnable = () => {
+    setSubOpen(!subOpen);
   };
 
   const handleUpdate = (e) => {
@@ -62,6 +68,7 @@ const AdminCategorySlot = ({
             variant="danger"
             onClick={() => handleRemove(slug)}
             className="float-right"
+            disabled={subOpen}
           >
             <BsTrash />
           </Button>
@@ -69,10 +76,15 @@ const AdminCategorySlot = ({
             variant="warning"
             className="float-right mr-3"
             onClick={enable}
+            disabled={subOpen}
           >
             <MdModeEdit />
           </Button>
-          <Button variant="primary" className="float-right mr-3">
+          <Button
+            variant="primary"
+            className="float-right mr-3"
+            onClick={subEnable}
+          >
             <RiArrowDownSFill />
           </Button>
         </Col>
@@ -103,6 +115,13 @@ const AdminCategorySlot = ({
           </Col>
         </Collapse>
         <Col md={4} className="pl-0"></Col>
+      </Row>
+      <Row>
+        <Collapse in={subOpen}>
+          <Col>
+            <SubOpen parent={_id} />
+          </Col>
+        </Collapse>
       </Row>
     </ListGroup.Item>
   );

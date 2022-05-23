@@ -9,7 +9,6 @@ import {
   InputGroup,
   FormControl,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import {
@@ -18,8 +17,6 @@ import {
   createCategory,
 } from "../../utils/category";
 import { useSelector } from "react-redux";
-import { BsTrash } from "react-icons/bs";
-import { MdModeEdit } from "react-icons/md";
 import AdminCategorySlot from "../../components/AdminCategorySlot";
 
 const AdminCategory = () => {
@@ -27,7 +24,6 @@ const AdminCategory = () => {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [query, setQuery] = useState("");
-  const [disabled, setDisabled] = useState(true);
 
   const token = useSelector((state) => state.userReducer?.accessToken);
 
@@ -58,8 +54,6 @@ const AdminCategory = () => {
   };
 
   const handleRemove = async (slug) => {
-    // let answer = window.confirm("Delete?");
-    // console.log(answer, slug);
     if (window.confirm("Delete?")) {
       setLoading(true);
       deleteCategory(slug, token)
@@ -83,9 +77,6 @@ const AdminCategory = () => {
   };
 
   const filtered = (query) => (q) => q.name.toLowerCase().includes(query);
-  // const enable = () => {
-  //   setDisabled(!disabled);
-  // };
 
   return (
     <Container>

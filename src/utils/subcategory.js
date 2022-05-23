@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const getSubcategories = async () =>
-  await axios.get(`http://localhost:3001/subcategory`);
+export const getSubcategories = async (p) =>
+  await axios.get(`http://localhost:3001/subcategory/${p}`);
 
 export const getSubcategory = async (slug) =>
   await axios.get(`http://localhost:3001/subcategory/${slug}`);
