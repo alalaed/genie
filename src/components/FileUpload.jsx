@@ -59,15 +59,12 @@ const FileUpload = ({ values, setValues, setLoading }) => {
           onChange={fileUploader}
         />
       </InputGroup>
-      {/* <Card style={{ width: "10rem" }}>
-        <Card.Img variant="top" src={values.images[0].url} />
-      </Card> */}
-      {/* {values.images &&
+      {values.images &&
         values.images.map((image) => (
-          <Card style={{ width: "10rem" }}>
-            <Card.Img variant="top" src={image.url} />
+          <Card style={{ width: "10rem" }} className="mb-3">
+            <Card.Img variant="top" src={values.images[0].url} />
           </Card>
-        ))} */}
+        ))}
     </>
   );
 };
