@@ -1,10 +1,8 @@
 import "./App.css";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
-
+import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 import MyNavbar from "./components/MyNavbar";
@@ -17,7 +15,7 @@ import AdminProfile from "./pages/Admin/AdminProfile";
 import Search from "./pages/Search";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminCategory from "./pages/Admin/AdminCategory";
-import AdminSubcategory from "./pages/Admin/AdminSubcategory";
+import ProductCreate from "./pages/Admin/ProductCreate";
 
 const App = () => {
   useEffect(() => {}, []);
@@ -36,7 +34,7 @@ const App = () => {
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/admin/profile" element={<AdminProfile />} />
           <Route path="/admin/category" element={<AdminCategory />} />
-          <Route path="/admin/subcategory" element={<AdminSubcategory />} />
+          <Route path="/admin/add-edit-products" element={<ProductCreate />} />
         </Routes>
         <div className="mt-auto">
           <Footer />

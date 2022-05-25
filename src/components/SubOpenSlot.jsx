@@ -40,14 +40,14 @@ const SubOpenSlot = ({ id, name, slug }) => {
           <Col md={8}>{name}</Col>
           <Col md={4}>
             <Button
-              className="float-right mr-3"
+              className="float-end ms-3"
               variant="danger"
               onClick={(e) => removeSub(slug)}
             >
               <BsTrash />
             </Button>
             <Button
-              className="float-right mr-3"
+              className="float-end ms-3"
               variant="warning"
               onClick={enableEdit}
             >

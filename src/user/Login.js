@@ -92,7 +92,7 @@ const Login = () => {
             <div>Login with Google</div>
           </div>
         </Button>
-        <Link to="/forgotyourpassword" className="float-right">
+        <Link to="/forgotyourpassword" className="float-end">
           Forgot Password ?
         </Link>
       </Form>

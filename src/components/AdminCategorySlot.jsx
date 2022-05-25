@@ -63,18 +63,18 @@ const AdminCategorySlot = ({
             />
           </Form.Group>
         </Col>
-        <Col md={4} className="pl-0">
+        <Col md={4} className="pl-0 ">
           <Button
             variant="danger"
             onClick={() => handleRemove(slug)}
-            className="float-right"
+            className="float-end ms-3"
             disabled={subOpen}
           >
             <BsTrash />
           </Button>
           <Button
             variant="warning"
-            className="float-right mr-3"
+            className="float-end ms-3"
             onClick={enable}
             disabled={subOpen}
           >
@@ -82,7 +82,7 @@ const AdminCategorySlot = ({
           </Button>
           <Button
             variant="primary"
-            className="float-right mr-3"
+            className="float-end ms-3"
             onClick={subEnable}
           >
             <RiArrowDownSFill />

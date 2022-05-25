@@ -24,15 +24,7 @@ const AdminSidebar = () => {
               Category
             </Link>
           </ListGroup.Item>
-          <ListGroup.Item className="bg-dark px-0" style={{ color: "white" }}>
-            <Link
-              to="/admin/subcategory"
-              className="nav-link"
-              style={{ color: "white" }}
-            >
-              Subcategory
-            </Link>
-          </ListGroup.Item>
+
           <ListGroup.Item className="bg-dark px-0" style={{ color: "white" }}>
             <Link
               to="/admin/all-products"
