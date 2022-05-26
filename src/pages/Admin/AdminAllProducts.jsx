@@ -3,6 +3,7 @@ import { Col, Container, Row, Spinner, ListGroup } from "react-bootstrap";
 import AdminSidebar from "../../components/AdminSidebar";
 import { getProducts } from "../../utils/productCreate";
 import { useEffect } from "react";
+import ProductsListSlot from "../../components/ProductsListSlot";
 
 const AdminAllProducts = () => {
   const [products, setProducts] = useState([]);
@@ -15,12 +16,10 @@ const AdminAllProducts = () => {
   const loadAllProducts = async () => {
     try {
       setLoading(true);
-      const res = await getProducts(10);
-      if ((res.status = 200)) {
+      getProducts(10).then((res) => {
         setProducts(res.data);
-        console.log(products);
         setLoading(false);
-      }
+      });
     } catch (error) {
       setLoading(false);
       console.log(error);
@@ -34,6 +33,7 @@ const AdminAllProducts = () => {
           <AdminSidebar />
         </Col>
         <Col md={10}>
+          <h1 className="my-3">All Products</h1>
           {loading ? (
             <Container className="d-flex w-100 justify-content-center mt-3">
               <Spinner animation="grow" className="mx-4" />
@@ -42,22 +42,19 @@ const AdminAllProducts = () => {
               <Spinner animation="grow" className="mx-4" />
             </Container>
           ) : (
-            <ListGroup className="mt-3">
-              <ListGroup.Item>
-                <Row>
-                  <Col md={3}>
-                    <img
-                      src={products[0].images[0].url}
-                      className="image-all-products"
-                      alt=""
-                    />
-                  </Col>
-                  <Col md={9}>
-                    <p className="d-inline">{products[0].title}</p>
-                  </Col>
-                </Row>
-              </ListGroup.Item>
-            </ListGroup>
+            <Row>
+              {products.map((p) => (
+                <Col lg={3} className="mt-3">
+                  <ProductsListSlot
+                    title={p.title}
+                    image={p.images[0].url}
+                    key={p._id}
+                    price={p.price}
+                    description={p.description}
+                  />
+                </Col>
+              ))}
+            </Row>
           )}
         </Col>
       </Row>

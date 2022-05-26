@@ -8,7 +8,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
 
-  const URL = "http://localhost:3001/products";
+  const URL = "http://localhost:3001/products/10";
 
   const loadPage = async () => {
     try {

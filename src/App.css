@@ -84,3 +84,25 @@ input::-webkit-inner-spin-button {
   height: 5rem;
   width: 5rem;
 }
+.product-list-image {
+  width: 8rem;
+  height: 8rem;
+  object-fit: scale-down;
+}
+
+.all-product-card {
+  height: 21rem;
+}
+.line-clamp-title {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.line-clamp-text {
+  font-size: 1rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}

@@ -115,6 +115,7 @@ const AdminCategory = () => {
             <ListGroup>
               {categories.filter(filtered(query)).map((c) => (
                 <AdminCategorySlot
+                  key={c._id}
                   _id={c._id}
                   name={c.name}
                   slug={c.slug}
