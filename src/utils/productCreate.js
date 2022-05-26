@@ -6,3 +6,6 @@ export const createProduct = async (product, token) =>
       authorization: token,
     },
   });
+
+export const getProducts = async (count) =>
+  await axios.get(`http://localhost:3001/products/${count}`);

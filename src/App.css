@@ -80,3 +80,7 @@ input::-webkit-inner-spin-button {
   object-fit: center;
   cursor: pointer;
 }
+.image-all-products {
+  height: 5rem;
+  width: 5rem;
+}

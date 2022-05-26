@@ -40,7 +40,7 @@ const AdminSidebar = () => {
               className="nav-link"
               style={{ color: "white" }}
             >
-              Add / Edit Products
+              Add a Product
             </Link>
           </ListGroup.Item>
         </ListGroup>

@@ -33,7 +33,6 @@ const AdminCategory = () => {
 
   const loadCategories = () => {
     getCategories().then((c) => setCategories(c.data));
-    console.log(token);
   };
 
   const handleSubmit = (e) => {
