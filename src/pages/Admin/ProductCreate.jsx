@@ -84,7 +84,7 @@ const ProductCreate = () => {
     console.log("id?------" + values.category);
     setSubcategories(subRes.data);
 
-    if (subRes.data.length > 1) {
+    if (subRes.data.length >= 1) {
       setDisabled(false);
     } else {
       setDisabled(true);
