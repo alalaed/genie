@@ -1,4 +1,12 @@
-import { FormControl, InputGroup, Button, Card } from "react-bootstrap";
+import {
+  FormControl,
+  InputGroup,
+  Button,
+  Card,
+  Row,
+  Col,
+  Badge,
+} from "react-bootstrap";
 import Resizer from "react-image-file-resizer";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -32,9 +40,10 @@ const FileUpload = ({ values, setValues, setLoading }) => {
                 }
               )
               .then((res) => {
-                console.log("image data" + res);
+                console.log("this is the res-----" + res.data.url);
                 setLoading(false);
                 uploaded.push(res.data);
+                console.log("this is the uploaded------" + uploaded);
                 setValues({ ...values, images: uploaded });
               })
               .catch((err) => {
@@ -46,6 +55,28 @@ const FileUpload = ({ values, setValues, setLoading }) => {
         );
       }
     }
+  };
+  const handleRemove = (id) => {
+    console.log("this is the id-----" + id);
+    setLoading(true);
+    axios
+      .post(
+        "http://localhost:3001/cloudinary/removeImage",
+        { id },
+        { headers: { authorization: token ? token : "" } }
+      )
+      .then((res) => {
+        setLoading(false);
+        const { images } = values;
+        let filteredImages = images.filter((item) => {
+          return item.public_id !== id;
+        });
+        setValues({ ...values, images: filteredImages });
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
   };
   return (
     <>
@@ -59,12 +90,40 @@ const FileUpload = ({ values, setValues, setLoading }) => {
           onChange={fileUploader}
         />
       </InputGroup>
-      {values.images &&
-        values.images.map((image) => (
-          <Card style={{ width: "10rem" }} className="mb-3">
-            <Card.Img variant="top" src={values.images[0].url} />
-          </Card>
-        ))}
+      <Row>
+        {values.images &&
+          values.images.map((image) => (
+            <Col sm={2} key={image.public_id}>
+              <Card
+                // style={{
+                //   width: "10rem",
+                // }}
+                className="mb-3 mt-3 position-relative"
+              >
+                <Card.Img
+                  variant="top"
+                  src={image.url}
+                  style={{
+                    width: "8rem",
+                    height: "8rem",
+                    objectFit: "contain",
+                  }}
+                />
+
+                <Badge bg="danger" className="delete-badge">
+                  <Button
+                    variant="danger"
+                    className="px-0 py-0"
+                    style={{ lineHeight: "0.8rem" }}
+                    onClick={() => handleRemove(image.public_id)}
+                  >
+                    x
+                  </Button>
+                </Badge>
+              </Card>
+            </Col>
+          ))}
+      </Row>
     </>
   );
 };

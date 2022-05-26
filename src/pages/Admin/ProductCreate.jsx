@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import AdminSidebar from "../../components/AdminSidebar";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import { createProduct } from "../../utils/productCreate";
 import { getCategories } from "../../utils/category";
 import { getSubcategories } from "../../utils/subcategory";
@@ -143,6 +143,16 @@ const ProductCreate = () => {
               <Form.Label>Description</Form.Label>
               <Form.Control as="textarea" rows={3} />
             </Form.Group>
+            {loading ? (
+              <Container className="d-flex w-100 justify-content-center my-3">
+                <Spinner animation="grow" className="mx-4" size="sm" />
+                <Spinner animation="grow" className="mx-4" size="sm" />
+                <Spinner animation="grow" className="mx-4" size="sm" />
+                <Spinner animation="grow" className="mx-4" size="sm" />
+              </Container>
+            ) : (
+              <></>
+            )}
             <FileUpload
               values={values}
               setValues={setValues}

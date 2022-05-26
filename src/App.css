@@ -69,3 +69,14 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.delete-badge {
+  position: absolute;
+  top: -1rem;
+  right: -1rem;
+}
+
+.upload-preview {
+  object-fit: center;
+  cursor: pointer;
+}
