@@ -8,7 +8,7 @@ export const createProduct = async (product, token) =>
   });
 
 export const getProducts = async (count) =>
-  await axios.get(`http://localhost:3001/products/${count}`);
+  await axios.get(`http://localhost:3001/products/count/${count}`);
 
 export const deleteProduct = async (id, token) =>
   await axios.delete(`http://localhost:3001/products/${id}`, {

@@ -8,6 +8,7 @@ import { getSubcategories } from "../../utils/subcategory";
 import FileUpload from "../../components/FileUpload";
 import { getSingleProduct } from "../../utils/productCreate";
 import { useParams } from "react-router-dom";
+import ProductEditForm from "../../components/ProductEditForm";
 
 const initState = {
   title: "",
@@ -25,6 +26,7 @@ const initState = {
   brand: "",
 };
 const AdminProductEdit = () => {
+  const [disabled, setDisabled] = useState(false);
   const [values, setValues] = useState(initState);
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
@@ -33,14 +35,16 @@ const AdminProductEdit = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    // setValues(initState);
     loadProduct();
     loadCategories();
   }, []);
 
   const loadProduct = () => {
     getSingleProduct(params.slug).then((p) => {
-      setValues({ ...values, ...p.data[0] });
-      getSubcategories(p.data[0].category._id).then((res) => {
+      console.log(p.data);
+      setValues({ ...values, ...p.data });
+      getSubcategories(p.data.category._id).then((res) => {
         setSubcategories(res.data);
       });
     });
@@ -50,7 +54,7 @@ const AdminProductEdit = () => {
     getCategories().then((c) => {
       console.log("GET CATEGORIES IN UPDATE PRODUCT", c.data);
       setCategories(c.data);
-      console.log("GET VALUES IN UPDATE PRODUCT", values);
+      console.log("GET VALUES IN UPDATE PRODUCT", values.category.name);
     });
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -69,6 +73,11 @@ const AdminProductEdit = () => {
     console.log("id?------" + values.category);
     setSubcategories(subRes.data);
     setValues({ ...values, subcategory: "" });
+    if (subRes.data.length >= 1) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
   };
   const handleSubcategory = async (e) => {
     e.preventDefault();
@@ -82,6 +91,19 @@ const AdminProductEdit = () => {
           <AdminSidebar />
         </Col>
         <Col md={10}>
+          {/* <ProductEditForm
+            values={values}
+            handleSubcategory={handleSubcategory}
+            handleCategory={handleCategory}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            categories={categories}
+            subcategories={subcategories}
+            disabled={disabled}
+            loading={loading}
+            setLoading={setLoading}
+            setValues={setValues}
+          /> */}
           <Form onSubmit={handleSubmit}>
             <Row>
               <Col md={8}>
@@ -156,13 +178,11 @@ const AdminProductEdit = () => {
                     aria-label="Default select example"
                     className="d-block mb-3"
                     onChange={handleCategory}
-                    defaultValue={values.category._id}
                   >
-                    {values.category && (
-                      <option value={values.category._id}>
-                        {values.category.name}
-                      </option>
-                    )}
+                    <option value={values.category._id}>
+                      {values.category.name}
+                    </option>
+
                     {categories.map((c) => {
                       if (c.name !== values.category.name)
                         return (
@@ -178,9 +198,11 @@ const AdminProductEdit = () => {
                 <Form.Group controlId="subcategory">
                   <Form.Label>Subcategory</Form.Label>
                   <Form.Select
+                    disabled={disabled}
                     aria-label="Default select example"
                     className="d-block mb-3"
                     onChange={handleSubcategory}
+                    defaultValue={values.category._id}
                   >
                     {values.subcategory && (
                       <option value={values.subcategory._id}>

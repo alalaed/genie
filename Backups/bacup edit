@@ -1,91 +1,76 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import AdminSidebar from "../../components/AdminSidebar";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { Container, Row, Col, Form, Button, Spinner } from "react-bootstrap";
-import { createProduct } from "../../utils/productCreate";
 import { getCategories } from "../../utils/category";
 import { getSubcategories } from "../../utils/subcategory";
 import FileUpload from "../../components/FileUpload";
-import { productUpdate } from "../../utils/productCreate";
+import { getSingleProduct } from "../../utils/productCreate";
 import { useParams } from "react-router-dom";
 
+const initState = {
+  title: "",
+  description: "",
+  price: "",
+  category: "",
+  subcategory: "",
+  shipping: "",
+  shippingArray: ["Yes", "No"],
+  quantity: "",
+  images: [],
+  colors: ["Black", "Brown", "Silver", "White", "Blue"],
+  brands: ["Apple", "Samsung", "Microsoft", "lenovo", "Asus"],
+  color: "",
+  brand: "",
+};
 const AdminProductEdit = () => {
   const [disabled, setDisabled] = useState(false);
-  const [subcategories, setSubcategories] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
-  let params = useParams();
-
-  const initState = {
-    title: "",
-    description: "",
-    price: "",
-    category: "",
-    subcategory: "",
-    shipping: "",
-    shippingArray: ["Yes", "No"],
-    quantity: "",
-    images: [],
-    colors: ["Black", "Brown", "Silver", "White", "Blue"],
-    brands: ["Apple", "Samsung", "Microsoft", "lenovo", "Asus"],
-    color: "",
-    brand: "",
-  };
-
   const [values, setValues] = useState(initState);
+  const [categories, setCategories] = useState([]);
+  const [subcategories, setSubcategories] = useState([]);
   const token = useSelector((state) => state.userReducer?.accessToken);
-
-  const getOriginalSubcategories = async () => {
-    const subResponse = await getSubcategories(values.category._id);
-    setSubcategories(subResponse.data);
-    console.log("hello there kill" + subcategories);
-  };
-  const loadCategories = async () => {
-    const res = await getCategories();
-    setCategories(res.data);
-    if (values.category._id) getOriginalSubcategories();
-  };
-
-  const loadProduct = () => {
-    productUpdate(params.slug).then((p) => {
-      setValues({ ...values, ...p.data[0] });
-      console.log("hello there", values.title);
-    });
-  };
+  let params = useParams();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setValues(initState);
     loadProduct();
     loadCategories();
   }, []);
 
-  const handleChange = async (e) => {
-    setValues({ ...values, [e.target.id]: e.target.value });
-    console.log("this is the subcategory-----" + values.title);
-  };
-
-  const handleSubmit = (e) => {
-    console.log(values);
-    e.preventDefault();
-    createProduct(values, token)
-      .then((res) => {
-        window.alert(`${res.data.title} is created!`);
-        window.location.reload();
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-        if (err.response.status === 400) toast.error(err.response.data);
+  const loadProduct = () => {
+    getSingleProduct(params.slug).then((p) => {
+      setValues({ ...values, ...p.data[0] });
+      getSubcategories(p.data[0].category._id).then((res) => {
+        setSubcategories(res.data);
       });
+    });
   };
 
+  const loadCategories = () =>
+    getCategories().then((c) => {
+      console.log("GET CATEGORIES IN UPDATE PRODUCT", c.data);
+      setCategories(c.data);
+      console.log("GET VALUES IN UPDATE PRODUCT", values.category.name);
+    });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //
+  };
+
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.id]: e.target.value });
+    console.log(e.target.id, " ----- ", e.target.value);
+    // console.log("hello there", values.title);
+  };
   const handleCategory = async (e) => {
     e.preventDefault();
     setValues({ ...values, category: e.target.value });
     const subRes = await getSubcategories(e.target.value);
     console.log("id?------" + values.category);
     setSubcategories(subRes.data);
-
+    setValues({ ...values, subcategory: "" });
     if (subRes.data.length >= 1) {
       setDisabled(false);
     } else {
@@ -103,7 +88,7 @@ const AdminProductEdit = () => {
         <Col md={2} className="d-none d-md-block px-0">
           <AdminSidebar />
         </Col>
-        <Col md={10} className="mt-3">
+        <Col md={10}>
           <Form onSubmit={handleSubmit}>
             <Row>
               <Col md={8}>
@@ -116,8 +101,8 @@ const AdminProductEdit = () => {
                   <Form.Label>Title</Form.Label>
                   <Form.Control
                     type="string"
-                    placeholder="Enter Title"
                     defaultValue={values.title}
+                    placeholder="Enter Title"
                   />
                 </Form.Group>
               </Col>
@@ -129,7 +114,7 @@ const AdminProductEdit = () => {
                     className="d-block"
                     onChange={handleChange}
                   >
-                    <option>{values.brand}</option>
+                    <option value={values.brand}>{values.brand}</option>
                     {values.brands.map((b) => {
                       if (b !== values.brand) {
                         return (
@@ -144,17 +129,14 @@ const AdminProductEdit = () => {
               </Col>
             </Row>
 
-            <Form.Group
-              className="mb-3"
-              controlId="description"
-              value={values.description}
-              onChange={handleChange}
-            >
+            <Form.Group className="mb-3" controlId="description">
               <Form.Label>Description</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
                 defaultValue={values.description}
+                value={values.description}
+                onChange={handleChange}
               />
             </Form.Group>
             {loading ? (
@@ -182,17 +164,18 @@ const AdminProductEdit = () => {
                     className="d-block mb-3"
                     onChange={handleCategory}
                   >
-                    <option value={values.category._id}>
-                      {values.category.name}
-                    </option>
+                    {values.category && (
+                      <option value={values.category._id}>
+                        {values.category.name}
+                      </option>
+                    )}
                     {categories.map((c) => {
-                      if (c.name !== values.category.name) {
+                      if (c.name !== values.category.name)
                         return (
-                          <option key={c.id} value={c.id}>
+                          <option key={c._id} value={c._id}>
                             {c.name}
                           </option>
                         );
-                      }
                     })}
                   </Form.Select>
                 </Form.Group>
@@ -201,34 +184,25 @@ const AdminProductEdit = () => {
                 <Form.Group controlId="subcategory">
                   <Form.Label>Subcategory</Form.Label>
                   <Form.Select
+                    disabled={disabled}
                     aria-label="Default select example"
                     className="d-block mb-3"
                     onChange={handleSubcategory}
-                    disabled={disabled}
+                    defaultValue={values.category._id}
                   >
-                    {disabled ? (
-                      <option>Sorry no Subcategories!</option>
-                    ) : (
+                    {values.subcategory && (
                       <option value={values.subcategory._id}>
                         {values.subcategory.name}
                       </option>
                     )}
-
-                    {/* {subcategories.map((sub) => (
-                      <option key={sub._id} value={sub._id}>
-                        {sub.name}
-                      </option>
-                    ))} */}
-                    {subcategories.length > 0 &&
-                      subcategories.map((s) => {
-                        if (s.name !== values.subcategory.name) {
-                          return (
-                            <option key={s._id} value={s._id}>
-                              {s.name}
-                            </option>
-                          );
-                        }
-                      })}
+                    {subcategories.map((sub) => {
+                      if (sub.name !== values.subcategory.name)
+                        return (
+                          <option key={sub._id} value={sub._id}>
+                            {sub.name}
+                          </option>
+                        );
+                    })}
                   </Form.Select>
                 </Form.Group>
               </Col>
@@ -236,32 +210,25 @@ const AdminProductEdit = () => {
 
             <Row>
               <Col md={4}>
-                <Form.Group
-                  className="mb-3"
-                  controlId="price"
-                  value={values.price}
-                  onChange={handleChange}
-                >
+                <Form.Group className="mb-3" controlId="price">
                   <Form.Label>Price</Form.Label>
                   <Form.Control
                     type="number"
                     placeholder="Enter Price"
-                    defaultValue={values.price}
+                    onChange={handleChange}
+                    value={values.price}
                   />
                 </Form.Group>
               </Col>
               <Col md={3}>
-                <Form.Group
-                  className="mb-3"
-                  controlId="quantity"
-                  value={values.quantity}
-                  onChange={handleChange}
-                >
+                <Form.Group className="mb-3" controlId="quantity">
                   <Form.Label>Quantity</Form.Label>
                   <Form.Control
                     type="number"
                     placeholder="Enter Quantity"
+                    onChange={handleChange}
                     defaultValue={values.quantity}
+                    value={values.quantity}
                   />
                 </Form.Group>
               </Col>
