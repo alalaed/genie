@@ -6,9 +6,8 @@ import { Container, Row, Col, Form, Button, Spinner } from "react-bootstrap";
 import { getCategories } from "../../utils/category";
 import { getSubcategories } from "../../utils/subcategory";
 import FileUpload from "../../components/FileUpload";
-import { getSingleProduct } from "../../utils/productCreate";
-import { useParams } from "react-router-dom";
-import ProductEditForm from "../../components/ProductEditForm";
+import { getSingleProduct, updateProduct } from "../../utils/productCreate";
+import { useParams, useNavigate } from "react-router-dom";
 
 const initState = {
   title: "",
@@ -33,9 +32,9 @@ const AdminProductEdit = () => {
   const token = useSelector((state) => state.userReducer?.accessToken);
   let params = useParams();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // setValues(initState);
     loadProduct();
     loadCategories();
   }, []);
@@ -58,21 +57,29 @@ const AdminProductEdit = () => {
     });
   const handleSubmit = (e) => {
     e.preventDefault();
-    //
+    setLoading(true);
+    updateProduct(params.slug, values, token)
+      .then((res) => {
+        setLoading(false);
+        toast.success(`"${res.data.title}" is updated !`);
+        navigate("/admin/all-products");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err);
+      });
   };
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.id]: e.target.value });
-    console.log(e.target.id, " ----- ", e.target.value);
-    // console.log("hello there", values.title);
   };
   const handleCategory = async (e) => {
     e.preventDefault();
-    setValues({ ...values, category: e.target.value });
+    setValues({ ...values, subcategory: "", category: e.target.value });
+    console.log(values.category);
     const subRes = await getSubcategories(e.target.value);
     console.log("id?------" + values.category);
     setSubcategories(subRes.data);
-    setValues({ ...values, subcategory: "" });
     if (subRes.data.length >= 1) {
       setDisabled(false);
     } else {
@@ -82,6 +89,7 @@ const AdminProductEdit = () => {
   const handleSubcategory = async (e) => {
     e.preventDefault();
     setValues({ ...values, subcategory: e.target.value });
+    console.log(e.target.value);
   };
 
   return (
@@ -91,19 +99,6 @@ const AdminProductEdit = () => {
           <AdminSidebar />
         </Col>
         <Col md={10}>
-          {/* <ProductEditForm
-            values={values}
-            handleSubcategory={handleSubcategory}
-            handleCategory={handleCategory}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-            categories={categories}
-            subcategories={subcategories}
-            disabled={disabled}
-            loading={loading}
-            setLoading={setLoading}
-            setValues={setValues}
-          /> */}
           <Form onSubmit={handleSubmit}>
             <Row>
               <Col md={8}>
@@ -178,18 +173,19 @@ const AdminProductEdit = () => {
                     aria-label="Default select example"
                     className="d-block mb-3"
                     onChange={handleCategory}
+                    value={values.category._id}
                   >
-                    <option value={values.category._id}>
+                    {/* <option value={values.category._id}>
                       {values.category.name}
-                    </option>
+                    </option> */}
 
                     {categories.map((c) => {
-                      if (c.name !== values.category.name)
-                        return (
-                          <option key={c._id} value={c._id}>
-                            {c.name}
-                          </option>
-                        );
+                      // if (c.name !== values.category.name)
+                      return (
+                        <option key={c._id} value={c._id}>
+                          {c.name}
+                        </option>
+                      );
                     })}
                   </Form.Select>
                 </Form.Group>
