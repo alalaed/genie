@@ -4,9 +4,9 @@ import Profile from "../Profile";
 
 const AdminProfile = () => {
   return (
-    <Container>
+    <Container fluid>
       <Row>
-        <Col md={2} className="d-none d-md-block">
+        <Col md={2} className="d-none d-md-block px-0">
           <AdminSidebar />
         </Col>
         <Col md={10}>

@@ -9,3 +9,13 @@ export const createProduct = async (product, token) =>
 
 export const getProducts = async (count) =>
   await axios.get(`http://localhost:3001/products/${count}`);
+
+export const deleteProduct = async (id, token) =>
+  await axios.delete(`http://localhost:3001/products/${id}`, {
+    headers: {
+      authorization: token,
+    },
+  });
+
+export const getSingleProduct = async (slug) =>
+  await axios.get(`http://localhost:3001/products/${slug}`);

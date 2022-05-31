@@ -7,20 +7,24 @@ import { createProduct } from "../../utils/productCreate";
 import { getCategories } from "../../utils/category";
 import { getSubcategories } from "../../utils/subcategory";
 import FileUpload from "../../components/FileUpload";
+import { productUpdate } from "../../utils/productCreate";
+import { useParams } from "react-router-dom";
 
-const ProductCreate = () => {
-  const [disabled, setDisabled] = useState(true);
+const AdminProductEdit = () => {
+  const [disabled, setDisabled] = useState(false);
   const [subcategories, setSubcategories] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
+  let params = useParams();
 
   const initState = {
     title: "",
     description: "",
     price: "",
-    categories: [],
     category: "",
     subcategory: "",
     shipping: "",
+    shippingArray: ["Yes", "No"],
     quantity: "",
     images: [],
     colors: ["Black", "Brown", "Silver", "White", "Blue"],
@@ -29,37 +33,35 @@ const ProductCreate = () => {
     brand: "",
   };
 
-  const {
-    title,
-    description,
-    price,
-    categories,
-    category,
-    subcategory,
-    shipping,
-    quantity,
-    images,
-    colors,
-    brands,
-    color,
-    brand,
-  } = initState;
-
   const [values, setValues] = useState(initState);
   const token = useSelector((state) => state.userReducer?.accessToken);
 
+  const getOriginalSubcategories = async () => {
+    const subResponse = await getSubcategories(values.category._id);
+    setSubcategories(subResponse.data);
+    console.log("hello there kill" + subcategories);
+  };
   const loadCategories = async () => {
     const res = await getCategories();
-    setValues({ ...values, categories: res.data });
+    setCategories(res.data);
+    if (values.category._id) getOriginalSubcategories();
+  };
+
+  const loadProduct = () => {
+    productUpdate(params.slug).then((p) => {
+      setValues({ ...values, ...p.data[0] });
+      console.log("hello there", values.title);
+    });
   };
 
   useEffect(() => {
+    loadProduct();
     loadCategories();
   }, []);
 
   const handleChange = async (e) => {
     setValues({ ...values, [e.target.id]: e.target.value });
-    console.log("this is the subcategory-----" + values.subcategory);
+    console.log("this is the subcategory-----" + values.title);
   };
 
   const handleSubmit = (e) => {
@@ -94,6 +96,7 @@ const ProductCreate = () => {
     e.preventDefault();
     setValues({ ...values, subcategory: e.target.value });
   };
+
   return (
     <Container fluid>
       <Row>
@@ -108,10 +111,14 @@ const ProductCreate = () => {
                   className="mb-3"
                   controlId="title"
                   onChange={handleChange}
-                  value={title}
+                  value={values.title}
                 >
                   <Form.Label>Title</Form.Label>
-                  <Form.Control type="string" placeholder="Enter Title" />
+                  <Form.Control
+                    type="string"
+                    placeholder="Enter Title"
+                    defaultValue={values.title}
+                  />
                 </Form.Group>
               </Col>
               <Col md={4}>
@@ -122,12 +129,16 @@ const ProductCreate = () => {
                     className="d-block"
                     onChange={handleChange}
                   >
-                    <option>Please Select</option>
-                    {brands.map((b) => (
-                      <option key={b} value={b}>
-                        {b}
-                      </option>
-                    ))}
+                    <option>{values.brand}</option>
+                    {values.brands.map((b) => {
+                      if (b !== values.brand) {
+                        return (
+                          <option key={b} value={b}>
+                            {b}
+                          </option>
+                        );
+                      }
+                    })}
                   </Form.Select>
                 </Form.Group>
               </Col>
@@ -136,11 +147,15 @@ const ProductCreate = () => {
             <Form.Group
               className="mb-3"
               controlId="description"
-              value={description}
+              value={values.description}
               onChange={handleChange}
             >
               <Form.Label>Description</Form.Label>
-              <Form.Control as="textarea" rows={3} />
+              <Form.Control
+                as="textarea"
+                rows={3}
+                defaultValue={values.description}
+              />
             </Form.Group>
             {loading ? (
               <Container className="d-flex w-100 justify-content-center my-3">
@@ -167,12 +182,18 @@ const ProductCreate = () => {
                     className="d-block mb-3"
                     onChange={handleCategory}
                   >
-                    <option>Please Select</option>
-                    {values.categories.map((c) => (
-                      <option key={c._id} value={c._id}>
-                        {c.name}
-                      </option>
-                    ))}
+                    <option value={values.category._id}>
+                      {values.category.name}
+                    </option>
+                    {categories.map((c) => {
+                      if (c.name !== values.category.name) {
+                        return (
+                          <option key={c.id} value={c.id}>
+                            {c.name}
+                          </option>
+                        );
+                      }
+                    })}
                   </Form.Select>
                 </Form.Group>
               </Col>
@@ -185,18 +206,29 @@ const ProductCreate = () => {
                     onChange={handleSubcategory}
                     disabled={disabled}
                   >
-                    <option>
-                      {disabled ? (
-                        <>Sorry no Subcategories</>
-                      ) : (
-                        <>Please Select</>
-                      )}
-                    </option>
-                    {subcategories.map((sub) => (
+                    {disabled ? (
+                      <option>Sorry no Subcategories!</option>
+                    ) : (
+                      <option value={values.subcategory._id}>
+                        {values.subcategory.name}
+                      </option>
+                    )}
+
+                    {/* {subcategories.map((sub) => (
                       <option key={sub._id} value={sub._id}>
                         {sub.name}
                       </option>
-                    ))}
+                    ))} */}
+                    {subcategories.length > 0 &&
+                      subcategories.map((s) => {
+                        if (s.name !== values.subcategory.name) {
+                          return (
+                            <option key={s._id} value={s._id}>
+                              {s.name}
+                            </option>
+                          );
+                        }
+                      })}
                   </Form.Select>
                 </Form.Group>
               </Col>
@@ -207,22 +239,30 @@ const ProductCreate = () => {
                 <Form.Group
                   className="mb-3"
                   controlId="price"
-                  value={price}
+                  value={values.price}
                   onChange={handleChange}
                 >
                   <Form.Label>Price</Form.Label>
-                  <Form.Control type="number" placeholder="Enter Price" />
+                  <Form.Control
+                    type="number"
+                    placeholder="Enter Price"
+                    defaultValue={values.price}
+                  />
                 </Form.Group>
               </Col>
               <Col md={3}>
                 <Form.Group
                   className="mb-3"
                   controlId="quantity"
-                  value={quantity}
+                  value={values.quantity}
                   onChange={handleChange}
                 >
                   <Form.Label>Quantity</Form.Label>
-                  <Form.Control type="number" placeholder="Enter Quantity" />
+                  <Form.Control
+                    type="number"
+                    placeholder="Enter Quantity"
+                    defaultValue={values.quantity}
+                  />
                 </Form.Group>
               </Col>
 
@@ -234,12 +274,16 @@ const ProductCreate = () => {
                     className="d-block"
                     onChange={handleChange}
                   >
-                    <option>Please Select</option>
-                    {colors.map((c) => (
-                      <option key={c} value={c}>
-                        {c}
-                      </option>
-                    ))}
+                    <option>{values.color}</option>
+                    {values.colors.map((c) => {
+                      if (c !== values.color) {
+                        return (
+                          <option key={c} value={c}>
+                            {c}
+                          </option>
+                        );
+                      }
+                    })}
                   </Form.Select>
                 </Form.Group>
               </Col>
@@ -251,9 +295,16 @@ const ProductCreate = () => {
                     className="d-block"
                     onChange={handleChange}
                   >
-                    <option>Please Select</option>
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
+                    <option>{values.shipping}</option>
+                    {values.shippingArray.map((s) => {
+                      if (s !== values.shipping) {
+                        return (
+                          <option key={s} value={s}>
+                            {s}
+                          </option>
+                        );
+                      }
+                    })}
                   </Form.Select>
                 </Form.Group>
               </Col>
@@ -261,7 +312,7 @@ const ProductCreate = () => {
 
             <Row className="justify-content-center mt-3">
               <Button variant="success" type="submit" className="w-50 ">
-                Submit Product
+                Apply Changes
               </Button>
             </Row>
           </Form>
@@ -271,4 +322,4 @@ const ProductCreate = () => {
   );
 };
 
-export default ProductCreate;
+export default AdminProductEdit;

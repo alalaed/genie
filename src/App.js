@@ -17,6 +17,7 @@ import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminCategory from "./pages/Admin/AdminCategory";
 import ProductCreate from "./pages/Admin/ProductCreate";
 import AdminAllProducts from "./pages/Admin/AdminAllProducts";
+import AdminProductEdit from "./pages/Admin/AdminProductEdit";
 
 const App = () => {
   useEffect(() => {}, []);
@@ -37,6 +38,7 @@ const App = () => {
           <Route path="/admin/category" element={<AdminCategory />} />
           <Route path="/admin/add-edit-products" element={<ProductCreate />} />
           <Route path="/admin/all-products" element={<AdminAllProducts />} />
+          <Route path="/admin/product/:slug" element={<AdminProductEdit />} />
         </Routes>
         <div className="mt-auto">
           <Footer />

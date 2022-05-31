@@ -78,12 +78,12 @@ const AdminCategory = () => {
   const filtered = (query) => (q) => q.name.toLowerCase().includes(query);
 
   return (
-    <Container>
+    <Container fluid>
       <Row>
-        <Col md={2} className="d-none d-md-block">
+        <Col md={2} className="d-none d-md-block px-0">
           <AdminSidebar />
         </Col>
-        <Col md={10}>
+        <Col>
           <Form onSubmit={handleSubmit} className="mt-3">
             <Form.Group className="mb-3" controlId="formBasicCategory">
               <Form.Label>Name</Form.Label>

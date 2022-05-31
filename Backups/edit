@@ -1,18 +1,11 @@
-import { useState, useEffect } from "react";
+import { Container, Row, Col, Form, Spinner, Button } from "react-bootstrap";
 import AdminSidebar from "../../components/AdminSidebar";
-import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
-import { Container, Row, Col, Form, Button, Spinner } from "react-bootstrap";
-import { createProduct } from "../../utils/productCreate";
-import { getCategories } from "../../utils/category";
-import { getSubcategories } from "../../utils/subcategory";
-import FileUpload from "../../components/FileUpload";
+import { useParams } from "react-router-dom";
+import { productUpdate } from "../../utils/productCreate";
+import { useEffect } from "react";
+import { useState } from "react";
 
-const ProductCreate = () => {
-  const [disabled, setDisabled] = useState(true);
-  const [subcategories, setSubcategories] = useState([]);
-  const [loading, setLoading] = useState(false);
-
+const AdminProductEdit = () => {
   const initState = {
     title: "",
     description: "",
@@ -28,6 +21,9 @@ const ProductCreate = () => {
     color: "",
     brand: "",
   };
+  const [values, setValues] = useState(initState);
+  const [disabled, setDisabled] = useState(true);
+  let params = useParams();
 
   const {
     title,
@@ -43,61 +39,35 @@ const ProductCreate = () => {
     brands,
     color,
     brand,
-  } = initState;
-
-  const [values, setValues] = useState(initState);
-  const token = useSelector((state) => state.userReducer?.accessToken);
-
-  const loadCategories = async () => {
-    const res = await getCategories();
-    setValues({ ...values, categories: res.data });
-  };
+  } = values;
 
   useEffect(() => {
-    loadCategories();
+    loadProduct();
   }, []);
 
-  const handleChange = async (e) => {
-    setValues({ ...values, [e.target.id]: e.target.value });
-    console.log("this is the subcategory-----" + values.subcategory);
+  const loadProduct = () => {
+    productUpdate(params.slug).then((p) => {
+      setValues({ ...values, ...p.data });
+      console.log("hello there", values.title);
+    });
   };
 
-  const handleSubmit = (e) => {
-    console.log(values);
-    e.preventDefault();
-    createProduct(values, token)
-      .then((res) => {
-        window.alert(`${res.data.title} is created!`);
-        window.location.reload();
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-        if (err.response.status === 400) toast.error(err.response.data);
-      });
+  const handleSubmit = () => {
+    //
   };
-
-  const handleCategory = async (e) => {
-    e.preventDefault();
-    setValues({ ...values, category: e.target.value });
-    const subRes = await getSubcategories(e.target.value);
-    console.log("id?------" + values.category);
-    setSubcategories(subRes.data);
-
-    if (subRes.data.length >= 1) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
+  const handleChange = () => {
+    //
   };
-  const handleSubcategory = async (e) => {
-    e.preventDefault();
-    setValues({ ...values, subcategory: e.target.value });
+  const handleCategory = () => {
+    //
+  };
+  const handleSubcategory = () => {
+    //
   };
   return (
-    <Container fluid>
+    <Container>
       <Row>
-        <Col md={2} className="d-none d-md-block px-0">
+        <Col md={2}>
           <AdminSidebar />
         </Col>
         <Col md={10} className="mt-3">
@@ -108,7 +78,7 @@ const ProductCreate = () => {
                   className="mb-3"
                   controlId="title"
                   onChange={handleChange}
-                  value={title}
+                  value={"hello"}
                 >
                   <Form.Label>Title</Form.Label>
                   <Form.Control type="string" placeholder="Enter Title" />
@@ -123,11 +93,6 @@ const ProductCreate = () => {
                     onChange={handleChange}
                   >
                     <option>Please Select</option>
-                    {brands.map((b) => (
-                      <option key={b} value={b}>
-                        {b}
-                      </option>
-                    ))}
                   </Form.Select>
                 </Form.Group>
               </Col>
@@ -142,21 +107,6 @@ const ProductCreate = () => {
               <Form.Label>Description</Form.Label>
               <Form.Control as="textarea" rows={3} />
             </Form.Group>
-            {loading ? (
-              <Container className="d-flex w-100 justify-content-center my-3">
-                <Spinner animation="grow" className="mx-4" size="sm" />
-                <Spinner animation="grow" className="mx-4" size="sm" />
-                <Spinner animation="grow" className="mx-4" size="sm" />
-                <Spinner animation="grow" className="mx-4" size="sm" />
-              </Container>
-            ) : (
-              <></>
-            )}
-            <FileUpload
-              values={values}
-              setValues={setValues}
-              setLoading={setLoading}
-            />
 
             <Row>
               <Col md={6}>
@@ -168,11 +118,6 @@ const ProductCreate = () => {
                     onChange={handleCategory}
                   >
                     <option>Please Select</option>
-                    {values.categories.map((c) => (
-                      <option key={c._id} value={c._id}>
-                        {c.name}
-                      </option>
-                    ))}
                   </Form.Select>
                 </Form.Group>
               </Col>
@@ -185,18 +130,7 @@ const ProductCreate = () => {
                     onChange={handleSubcategory}
                     disabled={disabled}
                   >
-                    <option>
-                      {disabled ? (
-                        <>Sorry no Subcategories</>
-                      ) : (
-                        <>Please Select</>
-                      )}
-                    </option>
-                    {subcategories.map((sub) => (
-                      <option key={sub._id} value={sub._id}>
-                        {sub.name}
-                      </option>
-                    ))}
+                    <option></option>
                   </Form.Select>
                 </Form.Group>
               </Col>
@@ -235,11 +169,6 @@ const ProductCreate = () => {
                     onChange={handleChange}
                   >
                     <option>Please Select</option>
-                    {colors.map((c) => (
-                      <option key={c} value={c}>
-                        {c}
-                      </option>
-                    ))}
                   </Form.Select>
                 </Form.Group>
               </Col>
@@ -270,5 +199,4 @@ const ProductCreate = () => {
     </Container>
   );
 };
-
-export default ProductCreate;
+export default AdminProductEdit;
