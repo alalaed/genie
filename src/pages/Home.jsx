@@ -1,36 +1,23 @@
 import FirstHeadline from "../components/FirstHeadline";
-import SecondHeadline from "../components/SecondHeadline";
 import HomeBoard from "../components/Home_Board";
-import Sale from "../components/Sale";
+import NewArrivals from "../components/NewArrivals";
 import { useState, useEffect } from "react";
 import { Spinner } from "react-bootstrap";
+import { getOrderedProducts } from "../utils/productCreate";
+import BestSellers from "../components/BestSellers";
 const Home = () => {
-  const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const URL = "http://localhost:3001/products/10";
-
-  const loadPage = async () => {
-    try {
-      setLoading(true);
-      let response = await fetch(URL, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-      if (response.ok) {
-        let data = await response.json();
-        setLoading(false);
-        setProducts(data);
-      } else {
-        alert("something went wrong :(");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
-    loadPage();
+    loadAllProducts();
   }, []);
+
+  const loadAllProducts = () => {
+    getOrderedProducts("createdAt", "desc", 5).then((res) => {
+      setProducts(res.data);
+    });
+  };
 
   return (
     <>
@@ -42,8 +29,8 @@ const Home = () => {
         <>
           <FirstHeadline />
           <HomeBoard products={products} />
-          <SecondHeadline />
-          <Sale products={products} />
+          <NewArrivals />
+          <BestSellers />
         </>
       )}
     </>

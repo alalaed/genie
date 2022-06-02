@@ -20,7 +20,7 @@ const initState = {
   quantity: "",
   images: [],
   colors: ["Black", "Brown", "Silver", "White", "Blue"],
-  brands: ["Apple", "Samsung", "Microsoft", "lenovo", "Asus"],
+  brands: ["Apple", "Samsung", "Microsoft", "Lenovo", "Asus", "HP"],
   color: "",
   brand: "",
 };

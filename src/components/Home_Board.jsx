@@ -9,19 +9,20 @@ const Home_Board = ({ products }) => {
         {products.map((data) => (
           <Carousel.Item
             key={data._id}
-            onClick={() => navigate(`/products${data._id}`)}
+            onClick={() => navigate(`/products/${data._id}`)}
           >
-            <Link to={"/products"} style={{ textDecoration: "none" }}>
+            <div className="d-flex justify-content-center">
               <img
-                className="d-block w-100 rounded overflowHidden"
-                src="https://picsum.photos/800/400"
+                className="d-block w-100 rounded overflowHidden carouselImage"
+                src={data.images[0].url}
                 alt="First slide"
               />
-            </Link>
-            <Carousel.Caption>
-              <h3>{data.name}</h3>
-              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-            </Carousel.Caption>
+
+              {/* <div className="d-flex flex-column align-items-center justify-content-center">
+                <h2>{data.title}</h2>
+                <h3>{data.price}€</h3>
+              </div> */}
+            </div>
           </Carousel.Item>
         ))}
       </Carousel>

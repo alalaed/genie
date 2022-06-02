@@ -19,3 +19,17 @@ export const deleteProduct = async (id, token) =>
 
 export const getSingleProduct = async (slug) =>
   await axios.get(`http://localhost:3001/products/${slug}`);
+
+export const updateProduct = async (slug, product, token) =>
+  await axios.put(`http://localhost:3001/products/${slug}`, product, {
+    headers: {
+      authorization: token,
+    },
+  });
+
+export const getOrderedProducts = async (sort, order, limit, token) =>
+  await axios.post(`http://localhost:3001/products/product-order`, {
+    sort,
+    order,
+    limit,
+  });
