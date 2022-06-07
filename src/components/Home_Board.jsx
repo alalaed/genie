@@ -9,7 +9,7 @@ const Home_Board = ({ products }) => {
         {products.map((data) => (
           <Carousel.Item
             key={data._id}
-            onClick={() => navigate(`/products/${data._id}`)}
+            onClick={() => navigate(`/product/${data.slug}`)}
           >
             <div className="d-flex justify-content-center">
               <img
@@ -17,11 +17,6 @@ const Home_Board = ({ products }) => {
                 src={data.images[0].url}
                 alt="First slide"
               />
-
-              {/* <div className="d-flex flex-column align-items-center justify-content-center">
-                <h2>{data.title}</h2>
-                <h3>{data.price}€</h3>
-              </div> */}
             </div>
           </Carousel.Item>
         ))}

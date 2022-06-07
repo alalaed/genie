@@ -112,3 +112,13 @@ input::-webkit-inner-spin-button {
   width: 20rem;
   object-fit: scale-down;
 }
+.displayProduct {
+  object-fit: scale-down;
+  max-height: 25rem;
+}
+.sideProductInfo {
+  height: 28rem;
+}
+.sideInfoList {
+  font-size: 1rem;
+}

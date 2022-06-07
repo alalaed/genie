@@ -9,15 +9,14 @@ const Home = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    loadAllProducts();
-  }, []);
-
   const loadAllProducts = () => {
     getOrderedProducts("createdAt", "desc", 5).then((res) => {
       setProducts(res.data);
     });
   };
+  useEffect(() => {
+    loadAllProducts();
+  }, []);
 
   return (
     <>

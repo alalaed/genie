@@ -9,7 +9,7 @@ const NewArrivals = () => {
 
   useEffect(() => {
     loadProducts();
-  });
+  }, []);
 
   const loadProducts = () => {
     getOrderedProducts("createdAt", "desc", 6).then((res) =>
@@ -24,7 +24,7 @@ const NewArrivals = () => {
           return (
             <Col xs={12} md={4} lg={4} xl={2} className="mt-3 " key={data._id}>
               <Link
-                to={`/product/${data._id}`}
+                to={`/product/${data.slug}`}
                 style={{ textDecoration: "none" }}
               >
                 <img

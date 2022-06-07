@@ -27,9 +27,16 @@ export const updateProduct = async (slug, product, token) =>
     },
   });
 
-export const getOrderedProducts = async (sort, order, limit, token) =>
+export const getOrderedProducts = async (sort, order, limit) =>
   await axios.post(`http://localhost:3001/products/product-order`, {
     sort,
     order,
     limit,
   });
+
+// export const getOrderedProducts = async (sort, order, page) =>
+//   await axios.post(`http://localhost:3001/products/product-order`, {
+//     sort,
+//     order,
+//     page,
+//   });
