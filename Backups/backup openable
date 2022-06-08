@@ -1,79 +1,161 @@
-import { Button, Collapse, ListGroup, Form, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, ListGroup, Button, Modal } from "react-bootstrap";
+import { BsCartPlus, BsHeart } from "react-icons/bs";
+import { RiStarLine } from "react-icons/ri";
+import { useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { MdModeEdit } from "react-icons/md";
-import { BsTrash } from "react-icons/bs";
-import { RiArrowDownSFill } from "react-icons/ri";
-import { MdDone } from "react-icons/md";
-import { updateCategory } from "../utils/category";
-import { toast } from "react-toastify";
+import { getSingleProduct } from "../utils/productCreate";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import StarRatings from "react-star-ratings";
+import { useSelector } from "react-redux";
 
-const Openable = ({ _id, name, slug, token, handleRemove }) => {
-  const [disabled, setDisabled] = useState(true);
-  const [newName, setNewName] = useState("");
+const Product = () => {
+  let params = useParams();
+  let navigate = useNavigate();
 
-  const enable = () => {
-    setDisabled(!disabled);
+  const [product, setProduct] = useState({});
+  const initState = { publicUrl: "", url: "" };
+  const [images, setImages] = useState([{ initState }]);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const user = useSelector((state) => state.userReducer?.user);
+  const token = useSelector((state) => state.userReducer?.accessToken);
+
+  useEffect(() => {
+    loadSingleProduct();
+  }, []);
+
+  const loadSingleProduct = () => {
+    getSingleProduct(params.slug).then((p) => {
+      setImages(p.data.images);
+      setProduct(p.data);
+    });
   };
 
-  const handleUpdate = (e) => {
-    e.preventDefault();
-    // setLoading(true);
-    updateCategory(slug, { name: newName }, token)
-      .then((res) => {
-        // setLoading(false);
-        // setName("");
-        toast.success(`"${res.data.name}" is updated !`);
-        // navigate("/admin/category");
-      })
-      .catch((err) => {
-        console.log(err);
-        // setLoading(false);
-        if (err.response.status === 400) toast.error(err.response.data);
+  const handleModal = () => {
+    if (user && token) {
+      handleShow();
+      console.log(user, token);
+    } else {
+      navigate({
+        pathname: "/login",
+        state: { from: `/product/${params.slug}` },
       });
+    }
   };
 
   return (
-    <ListGroup.Item key={_id} className="mt-3">
-      <Row>
-        <Col md={8}>
-          <Form.Group className="mb-3 w-100">
-            <Form.Control
-              placeholder={name}
-              disabled={disabled}
-              value={name}
-              onChange={(e) => setNewName(e.target.value)}
-            />
-          </Form.Group>
+    <Container className="my-5">
+      <Row className="my-5">
+        <Col xs={12} lg={7}>
+          <Carousel>
+            {images.length > 0 ? (
+              images.map((img) => (
+                <img
+                  src={img.url}
+                  className="displayProduct rounded"
+                  key={img.public_id}
+                  alt=""
+                />
+              ))
+            ) : (
+              <img
+                src="https://www.tibs.org.tw/images/default.jpg"
+                alt=""
+                className="displayProduct"
+              />
+            )}
+          </Carousel>
         </Col>
-        <Col md={4} className="pl-0">
-          <Button
-            variant="danger"
-            onClick={() => handleRemove(slug)}
-            className="float-right"
-          >
-            <BsTrash />
-          </Button>
-          <Button
-            variant="warning"
-            className="float-right mr-3"
-            onClick={enable}
-          >
-            <MdModeEdit />
-          </Button>
-          <Button variant="primary" className="float-right mr-3">
-            <RiArrowDownSFill />
-          </Button>
+        <Col xs={12} lg={5}>
+          <Container className="sideProductInfo d-flex flex-column">
+            <div>
+              <h2 className="my-2">{product.title}</h2>
+              <p>{product.description}</p>
+              <ListGroup className="mt-3">
+                <ListGroup.Item className="d-flex justify-content-between">
+                  <div className="sideInfoList">Color :</div>
+                  <div className="sideInfoList">{product.color}</div>
+                </ListGroup.Item>
+                <ListGroup.Item className="d-flex justify-content-between">
+                  <div className="sideInfoList">Brand :</div>
+                  <div className="sideInfoList">{product.brand}</div>
+                </ListGroup.Item>
+                <ListGroup.Item className="d-flex justify-content-between">
+                  <div className="sideInfoList">Shipping :</div>
+                  <div className="sideInfoList">{product.shipping}</div>
+                </ListGroup.Item>
+                <ListGroup.Item className="d-flex justify-content-between">
+                  <div className="sideInfoList">Available :</div>
+                  <div className="sideInfoList">{product.quantity}</div>
+                </ListGroup.Item>
+              </ListGroup>
+              <div className="d-flex justify-content-center mt-3"></div>
+              <hr />
+              <div className="d-flex justify-content-center my-3">
+                <h2>{product.price},-</h2>
+              </div>
+              <hr />
+            </div>
 
-          {disabled ? (
-            <></>
-          ) : (
-            <Button variant="success" className="float-left mr-3">
-              <MdDone />
-            </Button>
-          )}
+            <div className=" mt-auto">
+              <div className="d-flex justify-content-between align-items-center">
+                <button className="addToCart bg-dark py-2 px-3 ">
+                  <BsCartPlus style={{ width: "2rem", height: "2rem" }} />
+                </button>
+
+                <button className="addToCart bg-dark py-2 px-3 ">
+                  <BsHeart style={{ width: "2rem", height: "2rem" }} />
+                </button>
+
+                <button
+                  className="addToCart bg-dark py-2 px-3"
+                  onClick={() => setShow(true)}
+                >
+                  <RiStarLine
+                    onClick={handleModal}
+                    style={{ width: "2rem", height: "2rem" }}
+                  />
+                </button>
+                <>
+                  <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Modal heading</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <StarRatings
+                        name={product._id}
+                        numberOfStars={5}
+                        rating={2}
+                        changeRating={(newRating, name) =>
+                          console.log(newRating, name)
+                        }
+                        isSelectable={true}
+                        starRatedColor="gold"
+                      />
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleClose}>
+                        Close
+                      </Button>
+                      <Button variant="primary" onClick={handleClose}>
+                        Submit Rating
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                </>
+              </div>
+            </div>
+          </Container>
         </Col>
       </Row>
-    </ListGroup.Item>
+      <Row>
+        <h3>Related Products</h3>
+      </Row>
+    </Container>
   );
 };
-export default Openable;
+
+export default Product;

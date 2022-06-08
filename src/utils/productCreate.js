@@ -34,9 +34,16 @@ export const getOrderedProducts = async (sort, order, limit) =>
     limit,
   });
 
-// export const getOrderedProducts = async (sort, order, page) =>
-//   await axios.post(`http://localhost:3001/products/product-order`, {
-//     sort,
-//     order,
-//     page,
-//   });
+export const productRate = async (userId, productId, rate, token) =>
+  await axios.put(
+    `http://localhost:3001/products/${userId}/rating/${productId}`,
+    { rate },
+    {
+      headers: {
+        authorization: token,
+      },
+    }
+  );
+
+export const getRelatedProducts = async (productId) =>
+  await axios.get(`http://localhost:3001/products/related/${productId}`);

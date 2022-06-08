@@ -1,28 +1,62 @@
-import { Container, Row, Col, ListGroup } from "react-bootstrap";
+import { Container, Row, Col, ListGroup, Button, Modal } from "react-bootstrap";
 import { BsCartPlus, BsHeart } from "react-icons/bs";
+import { RiStarLine } from "react-icons/ri";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState } from "react";
 import { getSingleProduct } from "../utils/productCreate";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import StarRatings from "react-star-ratings";
-import RatingModal from "./RatingModal";
+import { useSelector } from "react-redux";
+import LoginModal from "./LoginModal";
+import { productRate } from "../utils/productCreate";
+import { average } from "../utils/averageRating";
+import { getRelatedProducts } from "../utils/productCreate";
 
 const Product = () => {
   let params = useParams();
+
   const [product, setProduct] = useState({});
   const initState = { publicUrl: "", url: "" };
   const [images, setImages] = useState([{ initState }]);
+  const [show, setShow] = useState(false);
+  const [rate, setRate] = useState(0);
+  const [related, setRelated] = useState([]);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const user = useSelector((state) => state.userReducer?.user);
+  const token = useSelector((state) => state.userReducer?.accessToken);
 
   useEffect(() => {
     loadSingleProduct();
-  }, []);
+  }, [params.slug]);
+
+  useEffect(() => {
+    if (product.ratings && user) {
+      let alreadyRated = product.ratings.find(
+        (ele) => ele.postedBy.toString() === user._id.toString()
+      );
+      alreadyRated && setRate(alreadyRated.star);
+    }
+  });
 
   const loadSingleProduct = () => {
     getSingleProduct(params.slug).then((p) => {
       setImages(p.data.images);
       setProduct(p.data);
+      getRelatedProducts(p.data._id).then((r) => {
+        setRelated(r.data);
+      });
+    });
+  };
+
+  const onStarClick = (newRating, name) => {
+    setRate(newRating);
+    productRate(user._id, name, newRating, token).then((res) => {
+      console.log("rated" + res.data);
+      loadSingleProduct();
     });
   };
 
@@ -53,6 +87,11 @@ const Product = () => {
           <Container className="sideProductInfo d-flex flex-column">
             <div>
               <h2 className="my-2">{product.title}</h2>
+              {product && product.ratings && product.ratings.length > 0 ? (
+                average(product)
+              ) : (
+                <p bg="danger">"No rating yet !"</p>
+              )}
               <p>{product.description}</p>
               <ListGroup className="mt-3">
                 <ListGroup.Item className="d-flex justify-content-between">
@@ -72,23 +111,15 @@ const Product = () => {
                   <div className="sideInfoList">{product.quantity}</div>
                 </ListGroup.Item>
               </ListGroup>
-              <div className="d-flex justify-content-center mt-3">
-                <StarRatings
-                  name={product._id}
-                  numberOfStars={5}
-                  rating={2}
-                  changeRating={(newRating, name) =>
-                    console.log(newRating, name)
-                  }
-                  isSelectable={true}
-                  starRatedColor="gold"
-                />
+              <div className="d-flex justify-content-center mt-3"></div>
+              <hr />
+              <div className="d-flex justify-content-center my-3">
+                <h2>{product.price},-</h2>
               </div>
+              <hr />
             </div>
 
             <div className=" mt-auto">
-              <hr />
-
               <div className="d-flex justify-content-between align-items-center">
                 <button className="addToCart bg-dark py-2 px-3 ">
                   <BsCartPlus style={{ width: "2rem", height: "2rem" }} />
@@ -98,16 +129,90 @@ const Product = () => {
                   <BsHeart style={{ width: "2rem", height: "2rem" }} />
                 </button>
 
-                <RatingModal className="addToCart" />
-
-                <h3>{product.price},-</h3>
+                <button
+                  className="addToCart bg-dark py-2 px-3"
+                  onClick={() => setShow(true)}
+                >
+                  <RiStarLine
+                    onClick={handleShow}
+                    style={{ width: "2rem", height: "2rem" }}
+                  />
+                </button>
+                {user && token ? (
+                  <>
+                    <Modal show={show} onHide={handleClose}>
+                      <Modal.Header closeButton>
+                        <Modal.Title>Rate this product.</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <StarRatings
+                          name={product._id}
+                          numberOfStars={5}
+                          rating={rate}
+                          changeRating={onStarClick}
+                          isSelectable={true}
+                          starRatedColor="gold"
+                        />
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                          Close
+                        </Button>
+                        <Button variant="primary" onClick={handleClose}>
+                          Submit Rating
+                        </Button>
+                      </Modal.Footer>
+                    </Modal>
+                  </>
+                ) : (
+                  <>
+                    <Modal show={show} onHide={handleClose}>
+                      <Modal.Header closeButton>
+                        <Modal.Title>
+                          You need to be logged in to rate this product.
+                        </Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <LoginModal />
+                      </Modal.Body>
+                    </Modal>
+                  </>
+                )}
               </div>
             </div>
           </Container>
         </Col>
       </Row>
       <Row>
-        <h3>Related Products</h3>
+        <h3>Similar Products</h3>
+
+        {related.length > 0
+          ? related.map((data) => {
+              return (
+                <Col
+                  xs={12}
+                  md={4}
+                  lg={4}
+                  xl={2}
+                  className="mt-3 "
+                  key={data._id}
+                >
+                  <Link
+                    to={`/product/${data.slug}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <img
+                      src={data.images[0].url}
+                      className="salePic rounded border border-secondary px-3 shadow"
+                      alt=""
+                    />
+                  </Link>
+                </Col>
+              );
+            })
+          : "Sorry, we don't have similar products!"}
+
+        {}
       </Row>
     </Container>
   );

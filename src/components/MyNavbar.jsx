@@ -5,6 +5,8 @@ import {
   Nav,
   FormControl,
   NavDropdown,
+  Button,
+  Offcanvas,
 } from "react-bootstrap";
 import logo from "../images/logo.png";
 import { BsPersonCircle, BsCartPlus, BsPercent } from "react-icons/bs";
@@ -12,8 +14,9 @@ import { MdOutlineLocalOffer } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
-const MyNavbar = () => {
+const MyNavbar = ({ handleShow }) => {
   const user = useSelector((state) => state.userReducer?.user.role[0]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -39,7 +42,7 @@ const MyNavbar = () => {
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll" className="whiteText ml-3">
           <Nav.Link href="#action1" className="whiteText">
-            <MdOutlineLocalOffer className="navIcons" />
+            <MdOutlineLocalOffer className="navIcons" onClick={handleShow} />
           </Nav.Link>
           <Nav.Link href="#action2" className="whiteText">
             <BsPercent className="navIcons" />
@@ -53,11 +56,7 @@ const MyNavbar = () => {
             />
           </Form>
         </Navbar.Collapse>
-        {/* <div className="d-flex flex-column align-items-center px-1 ml-3 ">
-            <Link to={"/login"}>
-              <BsPersonCircle className="navIcons" />
-            </Link>
-          </div> */}
+
         <div className="d-flex flex-column align-items-center px-1 ml-3 ">
           <BsCartPlus className="navIcons" />
         </div>

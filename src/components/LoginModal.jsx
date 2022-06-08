@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { Form, Button, Container, Spinner } from "react-bootstrap";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SiGoogle } from "react-icons/si";
 import { loginUser } from "../redux/actions";
 import { validateInputs } from "../utils/validateInputs";
 
-const Login = () => {
+const LoginModal = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -32,16 +33,16 @@ const Login = () => {
     }
   };
 
-  useEffect(() => {
-    if (user === "Admin") {
-      navigate("/");
-    } else if (user === "User") {
-      navigate("/");
-    }
-  }, [user]);
+  //   useEffect(() => {
+  //     if (user === "Admin") {
+  //       navigate("/");
+  //     } else if (user === "User") {
+  //       navigate("/");
+  //     }
+  //   }, [user]);
 
   return (
-    <Container className="w-50 mt-5">
+    <Container className="w-100 ">
       {loading ? (
         <Container className="d-flex w-100 justify-content-center">
           <Spinner animation="grow" className="mx-4" />
@@ -91,4 +92,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginModal;

@@ -3,7 +3,8 @@ import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Offcanvas } from "react-bootstrap";
 
 import MyNavbar from "./components/MyNavbar";
 import Home from "./pages/Home";
@@ -18,15 +19,34 @@ import AdminCategory from "./pages/Admin/AdminCategory";
 import ProductCreate from "./pages/Admin/ProductCreate";
 import AdminAllProducts from "./pages/Admin/AdminAllProducts";
 import AdminProductEdit from "./pages/Admin/AdminProductEdit";
+import OffCanvas from "./components/OffCanvas";
 
 const App = () => {
-  useEffect(() => {}, []);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <BrowserRouter>
       <div className="d-flex flex-column min-vh-100">
-        <MyNavbar />
+        <MyNavbar handleShow={handleShow} />
         <ToastContainer />
+
+        <Offcanvas
+          show={show}
+          onHide={handleClose}
+          style={{ width: "10rem", height: "100vh", marginTop: "88px" }}
+          // className="mt-5"
+        >
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            <OffCanvas />
+          </Offcanvas.Body>
+        </Offcanvas>
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product/:slug" element={<Product />} />
