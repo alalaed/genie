@@ -8,10 +8,8 @@ export const average = (p) => {
 
     ratingsArray.map((r) => total.push(r.star));
     let totalReduced = total.reduce((p, n) => p + n, 0);
-    console.log("totalReduced", totalReduced);
     let highest = length * 5;
     let result = (totalReduced * 5) / highest;
-    console.log("result", result);
 
     return (
       <div className="my-2 w-100 d-flex ">

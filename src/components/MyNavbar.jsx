@@ -5,16 +5,13 @@ import {
   Nav,
   FormControl,
   NavDropdown,
-  Button,
-  Offcanvas,
 } from "react-bootstrap";
 import logo from "../images/logo.png";
 import { BsPersonCircle, BsCartPlus, BsPercent } from "react-icons/bs";
-import { MdOutlineLocalOffer } from "react-icons/md";
+import { FiFilter } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 
 const MyNavbar = ({ handleShow }) => {
   const user = useSelector((state) => state.userReducer?.user.role[0]);
@@ -42,7 +39,7 @@ const MyNavbar = ({ handleShow }) => {
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll" className="whiteText ml-3">
           <Nav.Link href="#action1" className="whiteText">
-            <MdOutlineLocalOffer className="navIcons" onClick={handleShow} />
+            <FiFilter className="navIcons" onClick={handleShow} />
           </Nav.Link>
           <Nav.Link href="#action2" className="whiteText">
             <BsPercent className="navIcons" />

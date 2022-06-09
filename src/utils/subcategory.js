@@ -1,4 +1,9 @@
 import axios from "axios";
+export const getSubs = async () =>
+  await axios.get(`http://localhost:3001/subcategory/subs`);
+
+export const getFilterSubcategory = async (slug) =>
+  await axios.get(`http://localhost:3001/subcategory/sub/${slug}`);
 
 export const getSubcategories = async (p) =>
   await axios.get(`http://localhost:3001/subcategory/${p}`);

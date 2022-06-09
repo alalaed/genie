@@ -20,6 +20,8 @@ import ProductCreate from "./pages/Admin/ProductCreate";
 import AdminAllProducts from "./pages/Admin/AdminAllProducts";
 import AdminProductEdit from "./pages/Admin/AdminProductEdit";
 import OffCanvas from "./components/OffCanvas";
+import CategoryFilter from "./pages/CategoryFilter";
+import SubcategoryFilter from "./pages/SubcategoryFilter";
 
 const App = () => {
   const [show, setShow] = useState(false);
@@ -36,14 +38,14 @@ const App = () => {
         <Offcanvas
           show={show}
           onHide={handleClose}
-          style={{ width: "10rem", height: "100vh", marginTop: "88px" }}
+          style={{ width: "15rem", height: "100vh", marginTop: "88px" }}
           // className="mt-5"
         >
           <Offcanvas.Header closeButton>
-            <Offcanvas.Title>Offcanvas</Offcanvas.Title>
+            <Offcanvas.Title>Filter By: </Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-            <OffCanvas />
+            <OffCanvas handleClose={handleClose} />
           </Offcanvas.Body>
         </Offcanvas>
 
@@ -59,6 +61,8 @@ const App = () => {
           <Route path="/admin/add-edit-products" element={<ProductCreate />} />
           <Route path="/admin/all-products" element={<AdminAllProducts />} />
           <Route path="/admin/product/:slug" element={<AdminProductEdit />} />
+          <Route path="/category/:slug" element={<CategoryFilter />} />
+          <Route path="/subcategory/:slug" element={<SubcategoryFilter />} />
         </Routes>
         <div className="mt-auto">
           <Footer />

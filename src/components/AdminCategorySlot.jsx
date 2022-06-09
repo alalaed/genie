@@ -39,7 +39,6 @@ const AdminCategorySlot = ({
         // setLoading(false);
         // setName("");
         toast.success(`"${res.data.name}" is updated !`);
-        // navigate("/admin/category");
         loadCategories();
         setOpen(!open);
       })
