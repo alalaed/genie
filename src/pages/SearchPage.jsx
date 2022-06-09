@@ -1,28 +1,26 @@
+import "antd/dist/antd.css";
 import { useState, useEffect } from "react";
-// import { getProducts, getProductsByFilter } from "../../functions/products";
 import { getProducts, getProductsByFilter } from "../utils/productCreate";
-// import { getCategories } from "../../functions/categories";
 import { getCategories } from "../utils/category";
-// import { getSubCategories } from "../../functions/subCategories";
 import { getSubcategories } from "../utils/subcategory";
 import { useSelector, useDispatch } from "react-redux";
-// import { ProductCard } from "../../components/cards/ProductCard";
 import ProductFilterCard from "../components/ProductFilterCard";
-import Container from "react-bootstrap/Container";
 import { Rating } from "../components/Rating";
+import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-// import { Menu, Radio } from "antd";
-// import { Menu, Slider, Checkbox, Radio } from "antd";
-import { Form } from "react-bootstrap";
-import { BsCurrencyDollar, BsStar } from "react-icons/bs";
-import { BiChevronDownSquare } from "react-icons/bi";
+import { Menu, Slider, Checkbox, Radio } from "antd";
+import {
+  DollarOutlined,
+  DownSquareOutlined,
+  StarOutlined,
+} from "@ant-design/icons";
 
-// const { SubMenu } = Menu;
+const { SubMenu } = Menu;
 
 //TODO perfectly align icons and filters text
 
-const SearchPage = () => {
+export const SearchPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [price, setPrice] = useState([0, 0]);
@@ -51,8 +49,8 @@ const SearchPage = () => {
   ]);
 
   const dispatch = useDispatch();
-  const { search } = useSelector((state) => ({ ...state }));
-  const { text } = search;
+  const { searchReducer } = useSelector((state) => ({ ...state }));
+  const { text } = searchReducer;
 
   useEffect(() => {
     loadAllProducts();
@@ -109,15 +107,7 @@ const SearchPage = () => {
   const showCategories = () =>
     categories.map((c) => (
       <div key={c._id}>
-        <Form.Check
-          inline
-          onChange={handleCategoriesCheck}
-          className="pb-2 pl-4 pr-4"
-          value={c._id}
-          name="category"
-          checked={categoryIds.includes(c._id)}
-        />
-        {/* <Checkbox
+        <Checkbox
           onChange={handleCategoriesCheck}
           className="pb-2 pl-4 pr-4"
           value={c._id}
@@ -125,7 +115,7 @@ const SearchPage = () => {
           checked={categoryIds.includes(c._id)}
         >
           {c.name}
-        </Checkbox> */}
+        </Checkbox>
         <br />
       </div>
     ));
@@ -211,15 +201,15 @@ const SearchPage = () => {
   // 7. show products based on brand name
   const showBrands = () =>
     brands.map((b) => (
-      <Form.Check
-        label={b}
+      <Radio
         value={b}
         name={b}
         checked={b === brand}
         onChange={handleBrand}
-        type="radio"
-        aria-label="radio 1"
-      />
+        className="pb-1 pl-4 pr-4"
+      >
+        {b}
+      </Radio>
     ));
 
   const handleBrand = (e) => {
@@ -240,24 +230,15 @@ const SearchPage = () => {
   // 8. show products based on color
   const showColors = () =>
     colors.map((c) => (
-      <Form.Check
-        label={c}
+      <Radio
         value={c}
         name={c}
         checked={c === color}
         onChange={handleColor}
-        type="radio"
-        aria-label="radio 1"
-      />
-      //   <Radio
-      //     value={c}
-      //     name={c}
-      //     checked={c === color}
-      //     onChange={handleColor}
-      //     className="pb-1 pl-4 pr-4"
-      //   >
-      //     {c}
-      //   </Radio>
+        className="pb-1 pl-4 pr-4"
+      >
+        {c}
+      </Radio>
     ));
 
   const handleColor = (e) => {
@@ -278,37 +259,23 @@ const SearchPage = () => {
   // 9. show products based on shipping yes/no
   const showShipping = () => (
     <>
-      <Form.Check
-        inline
-        label="Yes"
-        onChange={handleShippingchange}
-        value="Yes"
-        checked={shipping === "Yes"}
-      />
-      {/* <Checkbox
+      <Checkbox
         className="pb-2 pl-4 pr-4"
         onChange={handleShippingchange}
         value="Yes"
         checked={shipping === "Yes"}
       >
         Yes
-      </Checkbox> */}
-      <Form.Check
-        inline
-        label="No"
-        onChange={handleShippingchange}
-        value="No"
-        checked={shipping === "Yes"}
-      />
+      </Checkbox>
 
-      {/* <Checkbox
+      <Checkbox
         className="pb-2 pl-4 pr-4"
         onChange={handleShippingchange}
         value="No"
         checked={shipping === "No"}
       >
         No
-      </Checkbox> */}
+      </Checkbox>
     </>
   );
 
@@ -328,11 +295,116 @@ const SearchPage = () => {
   };
 
   return (
-    <Container className="">
-      <Row className="">
+    <Container fluid className="">
+      <Row>
         <Col md={3} className="text-center mb-4">
           <h3>Search/Filter</h3>
           <hr />
+          <Menu
+            defaultOpenKeys={["1", "2", "3", "4", "5", "6", "7"]}
+            mode="inline"
+          >
+            {/* price */}
+            <SubMenu
+              key="1"
+              title={
+                <span className="h6 d-flex align-items-center">
+                  <DollarOutlined /> Price
+                </span>
+              }
+            >
+              <div>
+                <Slider
+                  className="ml-4 mr-4 d-flex align-items-center"
+                  tipFormatter={(v) => `$ ${v}`}
+                  range
+                  value={price}
+                  onChange={handlePriceSlider}
+                  max="4999"
+                />
+              </div>
+            </SubMenu>
+
+            {/* brands */}
+            <SubMenu
+              key="5"
+              title={
+                <span className="h6">
+                  <DownSquareOutlined /> Brands
+                </span>
+              }
+            >
+              <div style={{ marginTop: "-10px" }} className="pr-5">
+                {showBrands()}
+              </div>
+            </SubMenu>
+
+            {/* category */}
+            <SubMenu
+              key="2"
+              title={
+                <span className="h6">
+                  <DownSquareOutlined /> Categories
+                </span>
+              }
+            >
+              <div style={{ marginTop: "-10px" }}>{showCategories()}</div>
+            </SubMenu>
+
+            {/* sub category */}
+            <SubMenu
+              key="4"
+              title={
+                <span className="h6">
+                  <DownSquareOutlined /> Sub Categories
+                </span>
+              }
+            >
+              <div style={{ marginTop: "-10px" }} className="pl-4 pr-4">
+                {showSubCategories()}
+              </div>
+            </SubMenu>
+
+            {/* stars */}
+            <SubMenu
+              key="3"
+              title={
+                <span className="h6">
+                  <StarOutlined /> Rating
+                </span>
+              }
+            >
+              <div style={{ marginTop: "-10px" }}>{showStars()}</div>
+            </SubMenu>
+
+            {/* colors */}
+            <SubMenu
+              key="6"
+              title={
+                <span className="h6">
+                  <DownSquareOutlined /> Colors
+                </span>
+              }
+            >
+              <div style={{ marginTop: "-10px" }} className="pr-5">
+                {showColors()}
+              </div>
+            </SubMenu>
+
+            {/* shipping */}
+            <SubMenu
+              key="7"
+              title={
+                <span className="h6">
+                  <DownSquareOutlined /> Shipping
+                </span>
+              }
+            >
+              <div style={{ marginTop: "-10px" }} className="pr-5">
+                {showShipping()}
+              </div>
+            </SubMenu>
+          </Menu>
         </Col>
 
         <Col md={9} className="">

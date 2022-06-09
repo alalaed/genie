@@ -2,7 +2,7 @@ import FirstHeadline from "../components/FirstHeadline";
 import HomeBoard from "../components/Home_Board";
 import NewArrivals from "../components/NewArrivals";
 import { useState, useEffect } from "react";
-import { Spinner } from "react-bootstrap";
+import { Spinner, Form } from "react-bootstrap";
 import { getOrderedProducts } from "../utils/productCreate";
 import BestSellers from "../components/BestSellers";
 const Home = () => {
@@ -30,6 +30,14 @@ const Home = () => {
           <HomeBoard products={products} />
           <NewArrivals />
           <BestSellers />
+          <Form.Check
+            inline
+            // onChange={handleCategoriesCheck}
+            className="pb-2 pl-4 pr-4"
+            // value={c._id}
+            name="category"
+            checked={true}
+          />
         </>
       )}
     </>

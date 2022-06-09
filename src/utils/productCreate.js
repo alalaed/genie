@@ -47,3 +47,6 @@ export const productRate = async (userId, productId, rate, token) =>
 
 export const getRelatedProducts = async (productId) =>
   await axios.get(`http://localhost:3001/products/related/${productId}`);
+
+export const getProductsByFilter = async (query) =>
+  await axios.post(`http://localhost:3001/products/search/filters`, query);

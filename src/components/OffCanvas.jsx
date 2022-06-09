@@ -4,11 +4,14 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getCategories } from "../utils/category";
 import { getSubs } from "../utils/subcategory";
+import { useNavigate } from "react-router-dom";
+import { AiFillSetting } from "react-icons/ai";
 
 const OffCanvas = ({ show, handleClose }) => {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState([]);
   const [subcategories, setSubcategories] = useState([]);
+  let navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -39,30 +42,40 @@ const OffCanvas = ({ show, handleClose }) => {
           <h6>Categories</h6>
           {categories.map((c) => (
             <Link to={`/category/${c.slug}`}>
-              <Badge
-                bg="primary"
-                className="me-1"
-                key={c._id}
-                onClick={handleClose}
-              >
-                {c.name}
-              </Badge>
+              <h4>
+                <Badge
+                  bg="primary"
+                  className="me-1"
+                  key={c._id}
+                  onClick={handleClose}
+                >
+                  {c.name}
+                </Badge>
+              </h4>
             </Link>
           ))}
           <hr />
           <h6 className="mt-3">Subcategories</h6>
           {subcategories.map((s) => (
             <Link to={`/subcategory/${s.slug}`}>
-              <Badge
-                bg="primary"
-                className="me-1"
-                key={s._id}
-                onClick={handleClose}
-              >
-                {s.name}
-              </Badge>
+              <h4>
+                <Badge
+                  bg="primary"
+                  className="me-1"
+                  key={s._id}
+                  onClick={handleClose}
+                >
+                  {s.name}
+                </Badge>
+              </h4>
             </Link>
           ))}
+          <h6 className="mt-3">Advanced Filtering</h6>
+          <h3>
+            <Badge onClick={() => navigate("/search")}>
+              <AiFillSetting />
+            </Badge>
+          </h3>
         </div>
       )}
     </div>

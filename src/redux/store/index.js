@@ -3,8 +3,8 @@ import thunk from "redux-thunk";
 import { persistReducer, persistStore } from "redux-persist";
 import localStorage from "redux-persist/lib/storage";
 import { encryptTransform } from "redux-persist-transform-encrypt";
-// import { SECRET_KEY } from "../../costants";
 import { userReducer } from "../reducers/userReducer";
+import { searchReducer } from "../reducers/searchReducer";
 
 export const initialState = {
   userReducer: null,
@@ -14,7 +14,10 @@ const SECRET_KEY = process.env.REACT_APP_SECRET_KEY;
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const rootReducer = combineReducers({ userReducer });
+const rootReducer = combineReducers({
+  userReducer,
+  searchReducer,
+});
 
 const persistConfig = {
   key: "root",

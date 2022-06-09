@@ -13,7 +13,6 @@ import Login from "./user/Login";
 import Product from "./components/Product";
 import Footer from "./components/Footer";
 import AdminProfile from "./pages/Admin/AdminProfile";
-import Search from "./pages/Search";
 import AdminDashboard from "./pages/Admin/AdminDashboard";
 import AdminCategory from "./pages/Admin/AdminCategory";
 import ProductCreate from "./pages/Admin/ProductCreate";
@@ -22,6 +21,7 @@ import AdminProductEdit from "./pages/Admin/AdminProductEdit";
 import OffCanvas from "./components/OffCanvas";
 import CategoryFilter from "./pages/CategoryFilter";
 import SubcategoryFilter from "./pages/SubcategoryFilter";
+import SearchPage from "./pages/SearchPage";
 
 const App = () => {
   const [show, setShow] = useState(false);
@@ -54,7 +54,6 @@ const App = () => {
           <Route path="/product/:slug" element={<Product />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/search" element={<Search />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/admin/profile" element={<AdminProfile />} />
           <Route path="/admin/category" element={<AdminCategory />} />
@@ -63,6 +62,7 @@ const App = () => {
           <Route path="/admin/product/:slug" element={<AdminProductEdit />} />
           <Route path="/category/:slug" element={<CategoryFilter />} />
           <Route path="/subcategory/:slug" element={<SubcategoryFilter />} />
+          <Route path="/search" element={<SearchPage />} />
         </Routes>
         <div className="mt-auto">
           <Footer />

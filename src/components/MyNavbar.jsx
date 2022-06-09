@@ -12,6 +12,7 @@ import { FiFilter } from "react-icons/fi";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Search from "./Search";
 
 const MyNavbar = ({ handleShow }) => {
   const user = useSelector((state) => state.userReducer?.user.role[0]);
@@ -44,14 +45,15 @@ const MyNavbar = ({ handleShow }) => {
           <Nav.Link href="#action2" className="whiteText">
             <BsPercent className="navIcons" />
           </Nav.Link>
-          <Form className=" d-flex w-50 ml-1">
-            <FormControl
+          {/*<Form className=" d-flex w-50 ml-1">
+             <FormControl
               type="search"
               placeholder="Search"
               className="me-2"
               aria-label="Search"
-            />
-          </Form>
+            /> 
+          </Form>*/}
+          <Search />
         </Navbar.Collapse>
 
         <div className="d-flex flex-column align-items-center px-1 ml-3 ">
