@@ -27,6 +27,10 @@ const OffCanvas = ({ show, handleClose }) => {
       );
     });
   }, []);
+  const handleAdvancedFilter = () => {
+    handleClose();
+    navigate("/search");
+  };
 
   return (
     <div>
@@ -42,7 +46,7 @@ const OffCanvas = ({ show, handleClose }) => {
           <h6>Categories</h6>
           {categories.map((c) => (
             <Link to={`/category/${c.slug}`}>
-              <h4>
+              <h5>
                 <Badge
                   bg="primary"
                   className="me-1"
@@ -51,14 +55,14 @@ const OffCanvas = ({ show, handleClose }) => {
                 >
                   {c.name}
                 </Badge>
-              </h4>
+              </h5>
             </Link>
           ))}
           <hr />
           <h6 className="mt-3">Subcategories</h6>
           {subcategories.map((s) => (
             <Link to={`/subcategory/${s.slug}`}>
-              <h4>
+              <h5>
                 <Badge
                   bg="primary"
                   className="me-1"
@@ -67,12 +71,12 @@ const OffCanvas = ({ show, handleClose }) => {
                 >
                   {s.name}
                 </Badge>
-              </h4>
+              </h5>
             </Link>
           ))}
           <h6 className="mt-3">Advanced Filtering</h6>
           <h3>
-            <Badge onClick={() => navigate("/search")}>
+            <Badge onClick={handleAdvancedFilter}>
               <AiFillSetting />
             </Badge>
           </h3>

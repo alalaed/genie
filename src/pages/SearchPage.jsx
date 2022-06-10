@@ -2,7 +2,7 @@ import "antd/dist/antd.css";
 import { useState, useEffect } from "react";
 import { getProducts, getProductsByFilter } from "../utils/productCreate";
 import { getCategories } from "../utils/category";
-import { getSubcategories } from "../utils/subcategory";
+import { getSubs } from "../utils/subcategory";
 import { useSelector, useDispatch } from "react-redux";
 import ProductFilterCard from "../components/ProductFilterCard";
 import { Rating } from "../components/Rating";
@@ -29,7 +29,7 @@ export const SearchPage = () => {
   const [categoryIds, setCategoryIds] = useState([]);
   const [star, setStar] = useState("");
   const [subCategories, setSubCategories] = useState([]);
-  const [subCategory, setSubCategory] = useState("");
+  const [subcategory, setSubcategory] = useState("");
   const [shipping, setShipping] = useState("");
   const [brand, setBrand] = useState("");
   const [brands, setBrands] = useState([
@@ -55,7 +55,7 @@ export const SearchPage = () => {
   useEffect(() => {
     loadAllProducts();
     getCategories().then((res) => setCategories(res.data));
-    getSubcategories().then((res) => setSubCategories(res.data));
+    getSubs().then((res) => setSubCategories(res.data));
   }, []);
 
   const getFilteredProducts = (query) => {
@@ -66,7 +66,7 @@ export const SearchPage = () => {
 
   // 1. load all products on page load
   const loadAllProducts = () => {
-    getProducts().then((p) => {
+    getProducts(12).then((p) => {
       setProducts(p.data);
       // console.log("🚀 ~ file: Shop.jsx ~ line 21 ~ getProducts.then ~ p.data", p.data)
       setLoading(false);
@@ -95,7 +95,7 @@ export const SearchPage = () => {
     });
     setCategoryIds([]);
     setStar("");
-    setSubCategory("");
+    setSubcategory("");
     setPrice(value);
     setTimeout(() => {
       setOk(!ok);
@@ -128,7 +128,7 @@ export const SearchPage = () => {
     });
     setPrice([0, 0]);
     setStar("");
-    setSubCategory("");
+    setSubcategory("");
 
     let inTheState = [...categoryIds];
     let checkedCategories = e.target.value;
@@ -173,9 +173,9 @@ export const SearchPage = () => {
 
   // 6. show products by sub category
 
-  const handleSubCategory = (subCategory) => {
-    console.log("SUB", subCategory);
-    setSubCategory(subCategory);
+  const handleSubCategory = (subcategory) => {
+    console.log("SUB", subcategory);
+    setSubcategory(subcategory);
     dispatch({
       type: "SEARCH_QUERY",
       payload: { text: "" },
@@ -183,7 +183,7 @@ export const SearchPage = () => {
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");
-    getFilteredProducts({ subCategory });
+    getFilteredProducts({ subcategory });
   };
 
   const showSubCategories = () =>
@@ -220,7 +220,7 @@ export const SearchPage = () => {
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");
-    setSubCategory("");
+    setSubcategory("");
     setColor("");
     setShipping("");
     setBrand(e.target.value);
@@ -250,7 +250,7 @@ export const SearchPage = () => {
     setCategoryIds([]);
     setStar("");
     setBrand("");
-    setSubCategory("");
+    setSubcategory("");
     setShipping("");
     setColor(e.target.value);
     getFilteredProducts({ color: e.target.value });
@@ -289,7 +289,7 @@ export const SearchPage = () => {
     setStar("");
     setBrand("");
     setColor("");
-    setSubCategory("");
+    setSubcategory("");
     setShipping(e.target.value);
     getFilteredProducts({ shipping: e.target.value });
   };
@@ -419,7 +419,13 @@ export const SearchPage = () => {
           <Row className="row pb-5">
             {products.map((p) => (
               <Col md={4} key={p._id} className="mt-3">
-                <ProductFilterCard product={p} />
+                <ProductFilterCard
+                  title={p.title}
+                  price={p.price}
+                  description={p.description}
+                  image={p.image}
+                  slug={p.slug}
+                />
               </Col>
             ))}
           </Row>

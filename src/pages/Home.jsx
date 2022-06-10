@@ -30,14 +30,6 @@ const Home = () => {
           <HomeBoard products={products} />
           <NewArrivals />
           <BestSellers />
-          <Form.Check
-            inline
-            // onChange={handleCategoriesCheck}
-            className="pb-2 pl-4 pr-4"
-            // value={c._id}
-            name="category"
-            checked={true}
-          />
         </>
       )}
     </>
