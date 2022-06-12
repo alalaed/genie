@@ -8,11 +8,13 @@ import { getSingleProduct } from "../utils/productCreate";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import StarRatings from "react-star-ratings";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import LoginModal from "./LoginModal";
 import { productRate } from "../utils/productCreate";
 import { average } from "../utils/averageRating";
 import { getRelatedProducts } from "../utils/productCreate";
+import _ from "lodash";
+import { Tooltip } from "antd";
 
 const Product = () => {
   let params = useParams();
@@ -23,11 +25,15 @@ const Product = () => {
   const [show, setShow] = useState(false);
   const [rate, setRate] = useState(0);
   const [related, setRelated] = useState([]);
+  const [tooltip, setTooltip] = useState("Click to add");
+
+  const dispatch = useDispatch();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const user = useSelector((state) => state.userReducer?.user);
   const token = useSelector((state) => state.userReducer?.accessToken);
+  const cart = useSelector((state) => state.cartReducer);
 
   useEffect(() => {
     loadSingleProduct();
@@ -60,8 +66,39 @@ const Product = () => {
     });
   };
 
+  const handleAddToCart = () => {
+    let cart = [];
+    // useful check for future nextJS version if SSR
+    if (typeof window !== "undefined") {
+      // if cart is in local storage GET it
+      if (localStorage.getItem("cart")) {
+        cart = JSON.parse(localStorage.getItem("cart"));
+      }
+      // push new product to cart
+      cart.push({
+        ...product,
+        count: 1,
+      });
+      // remove duplicates
+      let unique = _.uniqWith(cart, _.isEqual);
+      console.log("unique", unique);
+      localStorage.setItem("cart", JSON.stringify(unique));
+      // show tooltip
+      setTooltip("Added");
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: unique,
+      });
+      // show cart items in side drawer
+      dispatch({
+        type: "SET_VISIBLE",
+        payload: true,
+      });
+    }
+  };
+
   return (
-    <Container className="my-5">
+    <Container fluid className="my-5">
       <Row className="my-5">
         <Col xs={12} lg={7}>
           <Carousel>
@@ -121,9 +158,14 @@ const Product = () => {
 
             <div className=" mt-auto">
               <div className="d-flex justify-content-between align-items-center">
-                <button className="addToCart bg-dark py-2 px-3 ">
-                  <BsCartPlus style={{ width: "2rem", height: "2rem" }} />
-                </button>
+                <Tooltip title={tooltip}>
+                  <button
+                    className="addToCart bg-dark py-2 px-3 "
+                    onClick={handleAddToCart}
+                  >
+                    <BsCartPlus style={{ width: "2rem", height: "2rem" }} />
+                  </button>
+                </Tooltip>
 
                 <button className="addToCart bg-dark py-2 px-3 ">
                   <BsHeart style={{ width: "2rem", height: "2rem" }} />
@@ -173,7 +215,7 @@ const Product = () => {
                         </Modal.Title>
                       </Modal.Header>
                       <Modal.Body>
-                        <LoginModal />
+                        <LoginModal handleClose={handleClose} />
                       </Modal.Body>
                     </Modal>
                   </>

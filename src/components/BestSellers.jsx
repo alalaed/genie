@@ -15,7 +15,7 @@ const BestSellers = () => {
     getOrderedProducts("sold", "desc", 6).then((res) => setProducts(res.data));
   };
   return (
-    <Container className="mb-5 px-3">
+    <Container fluid className="mb-5 px-3">
       <h1>Best Sellers</h1>
       <Row>
         {products.map((data) => {

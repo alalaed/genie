@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 const Home_Board = ({ products }) => {
   const navigate = useNavigate();
   return (
-    <Container>
+    <Container fluid>
       <Carousel>
         {products.map((data) => (
           <Carousel.Item

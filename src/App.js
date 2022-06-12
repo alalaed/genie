@@ -22,6 +22,8 @@ import OffCanvas from "./components/OffCanvas";
 import CategoryFilter from "./pages/CategoryFilter";
 import SubcategoryFilter from "./pages/SubcategoryFilter";
 import SearchPage from "./pages/SearchPage";
+import Cart from "./pages/Cart";
+import OffCanvasCart from "./components/OffCanvasCart";
 
 const App = () => {
   const [show, setShow] = useState(false);
@@ -49,6 +51,8 @@ const App = () => {
           </Offcanvas.Body>
         </Offcanvas>
 
+        <OffCanvasCart />
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product/:slug" element={<Product />} />
@@ -63,6 +67,7 @@ const App = () => {
           <Route path="/category/:slug" element={<CategoryFilter />} />
           <Route path="/subcategory/:slug" element={<SubcategoryFilter />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
         <div className="mt-auto">
           <Footer />

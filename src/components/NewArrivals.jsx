@@ -17,7 +17,7 @@ const NewArrivals = () => {
     );
   };
   return (
-    <Container className="mb-5 px-3">
+    <Container fluid className="mb-5 px-3">
       <h1>NewArrivals</h1>
       <Row>
         {products.map((data) => {

@@ -7,7 +7,7 @@ import { SiGoogle } from "react-icons/si";
 import { loginUser } from "../redux/actions";
 import { validateInputs } from "../utils/validateInputs";
 
-const LoginModal = () => {
+const LoginModal = ({ handleClose }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -27,6 +27,7 @@ const LoginModal = () => {
       setEmail("");
       setPassword("");
       setLoading(false);
+      handleClose();
     } catch (error) {
       console.log(error);
       setLoading(false);

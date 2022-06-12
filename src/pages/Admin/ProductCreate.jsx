@@ -211,7 +211,11 @@ const ProductCreate = () => {
                   onChange={handleChange}
                 >
                   <Form.Label>Price</Form.Label>
-                  <Form.Control type="number" placeholder="Enter Price" />
+                  <Form.Control
+                    type="number"
+                    placeholder="Enter Price"
+                    className="numberSpinner"
+                  />
                 </Form.Group>
               </Col>
               <Col md={3}>
@@ -222,7 +226,11 @@ const ProductCreate = () => {
                   onChange={handleChange}
                 >
                   <Form.Label>Quantity</Form.Label>
-                  <Form.Control type="number" placeholder="Enter Quantity" />
+                  <Form.Control
+                    type="number"
+                    placeholder="Enter Quantity"
+                    className="numberSpinner"
+                  />
                 </Form.Group>
               </Col>
 

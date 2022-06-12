@@ -5,6 +5,8 @@ import localStorage from "redux-persist/lib/storage";
 import { encryptTransform } from "redux-persist-transform-encrypt";
 import { userReducer } from "../reducers/userReducer";
 import { searchReducer } from "../reducers/searchReducer";
+import { cartReducer } from "../reducers/cartReducer";
+import { drawerReducer } from "../reducers/drawerReducer";
 
 export const initialState = {
   userReducer: null,
@@ -17,6 +19,8 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = combineReducers({
   userReducer,
   searchReducer,
+  cartReducer,
+  drawerReducer,
 });
 
 const persistConfig = {

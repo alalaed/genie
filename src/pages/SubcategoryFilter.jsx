@@ -48,6 +48,7 @@ const SubcategoryFilter = () => {
               {products.map((p) => (
                 <Col md={4} className="my-2" key={p._id}>
                   <ProductFilterCard
+                    product={p}
                     title={p.title}
                     description={p.description}
                     price={p.price}

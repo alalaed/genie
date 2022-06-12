@@ -1,11 +1,4 @@
-import {
-  Container,
-  Navbar,
-  Form,
-  Nav,
-  FormControl,
-  NavDropdown,
-} from "react-bootstrap";
+import { Container, Navbar, Nav, Badge, NavDropdown } from "react-bootstrap";
 import logo from "../images/logo.png";
 import { BsPersonCircle, BsCartPlus, BsPercent } from "react-icons/bs";
 import { FiFilter } from "react-icons/fi";
@@ -18,6 +11,9 @@ const MyNavbar = ({ handleShow }) => {
   const user = useSelector((state) => state.userReducer?.user.role[0]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cartReducer);
+
+  console.log("cart is ", cart);
 
   const logOut = () => {
     localStorage.removeItem("accessToken");
@@ -56,8 +52,13 @@ const MyNavbar = ({ handleShow }) => {
           <Search />
         </Navbar.Collapse>
 
-        <div className="d-flex flex-column align-items-center px-1 ml-3 ">
-          <BsCartPlus className="navIcons" />
+        <div className="d-flex flex-column align-items-center px-1 ml-3 position-relative ">
+          <Link to={"/cart"}>
+            <BsCartPlus className="navIcons " />
+            <Badge bg="danger" className="cartBadge">
+              {cart.length}
+            </Badge>
+          </Link>
         </div>
         <NavDropdown
           title={<BsPersonCircle className="navIcons" />}

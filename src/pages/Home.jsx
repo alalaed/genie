@@ -2,7 +2,7 @@ import FirstHeadline from "../components/FirstHeadline";
 import HomeBoard from "../components/Home_Board";
 import NewArrivals from "../components/NewArrivals";
 import { useState, useEffect } from "react";
-import { Spinner, Form } from "react-bootstrap";
+import { Spinner, Container } from "react-bootstrap";
 import { getOrderedProducts } from "../utils/productCreate";
 import BestSellers from "../components/BestSellers";
 const Home = () => {
@@ -25,12 +25,12 @@ const Home = () => {
           <Spinner animation="border" variant="primary" />
         </div>
       ) : (
-        <>
+        <Container fluid>
           <FirstHeadline />
           <HomeBoard products={products} />
           <NewArrivals />
           <BestSellers />
-        </>
+        </Container>
       )}
     </>
   );

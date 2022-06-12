@@ -2,7 +2,7 @@ import { Container } from "react-bootstrap";
 
 const FirstHeadline = () => {
   return (
-    <Container className="mt-5 mb-3">
+    <Container fluid className="mt-5 mb-3">
       <h1> Highlights</h1>
     </Container>
   );

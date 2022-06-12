@@ -295,11 +295,9 @@ export const SearchPage = () => {
   };
 
   return (
-    <Container fluid className="">
+    <Container fluid className="mt-3">
       <Row>
-        <Col md={3} className="text-center mb-4">
-          <h3>Search/Filter</h3>
-          <hr />
+        <Col md={3} className=" mb-4">
           <Menu
             defaultOpenKeys={["1", "2", "3", "4", "5", "6", "7"]}
             mode="inline"
@@ -408,11 +406,7 @@ export const SearchPage = () => {
         </Col>
 
         <Col md={9} className="">
-          {loading ? (
-            <h4 className="text-danger text-center">Loading...</h4>
-          ) : (
-            <h4 className="text-danger text-center">Products</h4>
-          )}
+          {loading ? <h4 className="text-danger ">Loading...</h4> : <></>}
 
           {products.length < 1 && <p>No products found</p>}
 
@@ -420,10 +414,11 @@ export const SearchPage = () => {
             {products.map((p) => (
               <Col md={4} key={p._id} className="mt-3">
                 <ProductFilterCard
+                  product={p}
                   title={p.title}
                   price={p.price}
                   description={p.description}
-                  image={p.image}
+                  image={p.images[0].url}
                   slug={p.slug}
                 />
               </Col>
