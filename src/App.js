@@ -3,8 +3,9 @@ import "react-toastify/dist/ReactToastify.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Offcanvas } from "react-bootstrap";
+import { useSelector } from "react-redux";
 
 import MyNavbar from "./components/MyNavbar";
 import Home from "./pages/Home";
@@ -24,12 +25,15 @@ import SubcategoryFilter from "./pages/SubcategoryFilter";
 import SearchPage from "./pages/SearchPage";
 import Cart from "./pages/Cart";
 import OffCanvasCart from "./components/OffCanvasCart";
+import CheckOut from "./pages/CheckOut";
 
 const App = () => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const cart = useSelector((state) => state.cartReducer);
 
   return (
     <BrowserRouter>
@@ -51,8 +55,6 @@ const App = () => {
           </Offcanvas.Body>
         </Offcanvas>
 
-        <OffCanvasCart />
-
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/product/:slug" element={<Product />} />
@@ -68,7 +70,9 @@ const App = () => {
           <Route path="/subcategory/:slug" element={<SubcategoryFilter />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<CheckOut />} />
         </Routes>
+        <OffCanvasCart />
         <div className="mt-auto">
           <Footer />
         </div>

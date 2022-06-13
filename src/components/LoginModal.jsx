@@ -16,7 +16,7 @@ const LoginModal = ({ handleClose }) => {
   const [loading, setLoading] = useState(false);
 
   const userData = { email, password };
-  const user = useSelector((state) => state.userReducer?.user.role[0]);
+  const user = useSelector((state) => state.userReducer?.user.role);
 
   const handleSubmit = async (e) => {
     try {

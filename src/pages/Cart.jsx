@@ -16,7 +16,7 @@ const Cart = () => {
 
   return (
     <Container fluid className="mt-3">
-      <Row className="py-0 px-0">
+      <Row className="py-0">
         <Col md={8}>
           {!cart.length ? (
             <p>
@@ -26,7 +26,7 @@ const Cart = () => {
             <Table hover>
               <tbody>
                 <tr>
-                  <Row className="py-0 px-0">
+                  <Row className="py-0 ">
                     <Col
                       md={2}
                       className="d-flex

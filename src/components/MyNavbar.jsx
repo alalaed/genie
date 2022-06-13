@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Search from "./Search";
 
 const MyNavbar = ({ handleShow }) => {
-  const user = useSelector((state) => state.userReducer?.user.role[0]);
+  const user = useSelector((state) => state.userReducer?.user.role);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cartReducer);

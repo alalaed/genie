@@ -1,8 +1,6 @@
-import { Offcanvas, Button, Row, Col, Card } from "react-bootstrap";
+import { Offcanvas, Row, Col, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import ProductFilterCard from "./ProductFilterCard";
 
 const OffCanvasCart = () => {
   let dispatch = useDispatch();

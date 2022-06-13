@@ -62,7 +62,7 @@ const SummaryTable = ({ c, i }) => {
 
   return (
     <tr key={i}>
-      <Row className="py-0 px-0">
+      <Row className="py-0">
         <Col
           md={2}
           className="d-flex
