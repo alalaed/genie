@@ -6,8 +6,11 @@ import OrderOverviewDisabled from "../components/OrderOverviewDisabled";
 import { toast } from "react-toastify";
 import { saveUserAddress } from "../utils/userCart";
 import { applyCode } from "../utils/code";
+import { useDispatch } from "react-redux";
 
 const CheckOut = () => {
+  let dispatch = useDispatch();
+
   const cart = useSelector((state) => state.cartReducer);
   const user = useSelector((state) => state.userReducer?.user);
   const token = useSelector((state) => state.userReducer?.accessToken);
@@ -44,12 +47,22 @@ const CheckOut = () => {
         console.log(res.data);
         if (res.data) {
           setTotalAfterDiscount(res.data.totalAfterDiscount);
+          dispatch({
+            type: "COUPON_APPLIED",
+            payload: true,
+          });
         }
         // if (res.err) {
         //   setDiscountError(res.err);
         // }
       })
-      .catch((err) => setDiscountError(err));
+      .catch((err) => {
+        setDiscountError(err);
+        dispatch({
+          type: "COUPON_APPLIED",
+          payload: false,
+        });
+      });
   };
 
   return (

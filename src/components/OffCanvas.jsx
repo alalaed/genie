@@ -39,6 +39,12 @@ const OffCanvas = ({ show, handleClose }) => {
         </Container>
       ) : (
         <div>
+          <h6 className="mt-3">Advanced Filtering</h6>
+          <h3>
+            <Badge onClick={handleAdvancedFilter}>
+              <AiFillSetting />
+            </Badge>
+          </h3>
           <h6>Categories</h6>
           {categories.map((c) => (
             <Link to={`/category/${c.slug}`}>
@@ -70,12 +76,6 @@ const OffCanvas = ({ show, handleClose }) => {
               </h5>
             </Link>
           ))}
-          <h6 className="mt-3">Advanced Filtering</h6>
-          <h3>
-            <Badge onClick={handleAdvancedFilter}>
-              <AiFillSetting />
-            </Badge>
-          </h3>
         </div>
       )}
     </div>

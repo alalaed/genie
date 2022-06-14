@@ -27,6 +27,7 @@ import Cart from "./pages/Cart";
 import OffCanvasCart from "./components/OffCanvasCart";
 import CheckOut from "./pages/CheckOut";
 import CreateCodePage from "./pages/Admin/CreateCodePage";
+import PaymentPage from "./pages/PaymentPage";
 
 const App = () => {
   const [show, setShow] = useState(false);
@@ -73,6 +74,7 @@ const App = () => {
           <Route path="/search" element={<SearchPage />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<CheckOut />} />
+          <Route path="/payment" element={<PaymentPage />} />
         </Routes>
         <OffCanvasCart />
         <div className="mt-auto">

@@ -7,6 +7,7 @@ import { userReducer } from "../reducers/userReducer";
 import { searchReducer } from "../reducers/searchReducer";
 import { cartReducer } from "../reducers/cartReducer";
 import { drawerReducer } from "../reducers/drawerReducer";
+import { codeReducer } from "../reducers/codeReducer";
 
 export const initialState = {
   userReducer: null,
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
   searchReducer,
   cartReducer,
   drawerReducer,
+  codeReducer,
 });
 
 const persistConfig = {

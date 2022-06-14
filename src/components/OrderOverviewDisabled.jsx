@@ -35,15 +35,6 @@ const OrderOverviewDisabled = ({
     });
     navigate("/cart");
   };
-  const saveAddressInDb = () => {
-    console.log(address);
-    saveUserAddress(address, token).then((res) => {
-      if (res.data.ok) {
-        setAddressSaved(true);
-        toast.success("Address saved");
-      }
-    });
-  };
 
   console.log(products);
   return (
@@ -110,7 +101,11 @@ const OrderOverviewDisabled = ({
 
       <Row>
         <Col sm={6}>
-          <Button variant="success" className="w-100">
+          <Button
+            variant="success"
+            className="w-100"
+            onClick={() => navigate("/payment")}
+          >
             Place Order
           </Button>
         </Col>
