@@ -26,14 +26,3 @@ export const saveUserAddress = async (address, accessToken) =>
       },
     }
   );
-
-export const applyCoupon = async (coupon, accessToken) =>
-  await axios.post(
-    `http://localhost:3001/users/cart/coupon`,
-    { coupon },
-    {
-      headers: {
-        authorization: accessToken,
-      },
-    }
-  );

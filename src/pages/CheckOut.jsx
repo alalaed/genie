@@ -3,6 +3,9 @@ import { getUserCart } from "../utils/userCart";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import OrderOverviewDisabled from "../components/OrderOverviewDisabled";
+import { toast } from "react-toastify";
+import { saveUserAddress } from "../utils/userCart";
+import { applyCode } from "../utils/code";
 
 const CheckOut = () => {
   const cart = useSelector((state) => state.cartReducer);
@@ -13,6 +16,9 @@ const CheckOut = () => {
   const [total, setTotal] = useState(0);
   const [address, setAddress] = useState("");
   const [addressSaved, setAddressSaved] = useState(false);
+  const [code, setCode] = useState("");
+  const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
+  const [discountError, setDiscountError] = useState("");
 
   useEffect(() => {
     getUserCart(token).then((res) => {
@@ -22,48 +28,75 @@ const CheckOut = () => {
     });
   }, []);
 
+  const saveAddressInDb = () => {
+    console.log(address);
+    saveUserAddress(address, token).then((res) => {
+      if (res.data.address) {
+        setAddressSaved(true);
+        toast.success("Address saved");
+      }
+    });
+  };
+
+  const sendCode = () => {
+    applyCode(token, code)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data) {
+          setTotalAfterDiscount(res.data.totalAfterDiscount);
+        }
+        // if (res.err) {
+        //   setDiscountError(res.err);
+        // }
+      })
+      .catch((err) => setDiscountError(err));
+  };
+
   return (
     <Container fluid className="mt-3">
       <Row>
         <Col md={6}>
-          <InputGroup className="mb-3">
-            <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
-            <Form.Control
-              placeholder="Username"
-              aria-label="Username"
-              aria-describedby="basic-addon1"
-            />
-          </InputGroup>
-          <InputGroup className="mb-3">
-            <Form.Control
-              placeholder="Recipient's username"
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
-            />
-            <InputGroup.Text id="basic-addon2">@example.com</InputGroup.Text>
-          </InputGroup>
-          <Form.Label htmlFor="basic-url">Your vanity URL</Form.Label>
-          <InputGroup className="mb-3">
-            <InputGroup.Text id="basic-addon3">
-              https://example.com/users/
-            </InputGroup.Text>
-            <Form.Control id="basic-url" aria-describedby="basic-addon3" />
-          </InputGroup>
-          <InputGroup className="mb-3">
-            <InputGroup.Text>$</InputGroup.Text>
-            <Form.Control aria-label="Amount (to the nearest dollar)" />
-            <InputGroup.Text>.00</InputGroup.Text>
-          </InputGroup>
-          <InputGroup>
-            <InputGroup.Text>With textarea</InputGroup.Text>
-            <Form.Control as="textarea" aria-label="With textarea" />
-          </InputGroup>
-          text Area
-          <Button></Button>
+          <Form onSubmit={saveAddressInDb}>
+            <Form.Group>
+              <Form.Label>Deliver to :</Form.Label>
+              <Form.Control
+                type="text"
+                className=""
+                onChange={(e) => setAddress(e.target.value)}
+                value={address}
+                autoFocus
+                required
+              />
+              <br />
+              <Button onClick={saveAddressInDb} className="btn btn-primary">
+                Save
+              </Button>
+              <hr />
+            </Form.Group>
+          </Form>
           <hr />
-          <h4> GotCoupon?</h4>
+          <h4> Enter Promo Code?</h4>
           <br />
-          coupon input
+          <Form onSubmit={sendCode}>
+            <Form.Group>
+              <Form.Control
+                type="text"
+                className=""
+                onChange={(e) => {
+                  setCode(e.target.value);
+                  setDiscountError("");
+                }}
+                value={code}
+                required
+              />
+              <br />
+              {discountError && <p className="bg-danger"> Invalid Code</p>}
+              <Button onClick={sendCode} className="btn btn-primary">
+                Apply
+              </Button>
+              <hr />
+            </Form.Group>
+          </Form>
         </Col>
         <Col md={6}>
           <OrderOverviewDisabled
@@ -77,6 +110,7 @@ const CheckOut = () => {
             addressSaved={addressSaved}
             setAddressSaved={setAddressSaved}
             cart={cart}
+            totalAfterDiscount={totalAfterDiscount}
           />
         </Col>
       </Row>

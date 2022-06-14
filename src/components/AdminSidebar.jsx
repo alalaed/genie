@@ -43,6 +43,15 @@ const AdminSidebar = () => {
               Add a Product
             </Link>
           </ListGroup.Item>
+          <ListGroup.Item className="bg-dark px-0" style={{ color: "white" }}>
+            <Link
+              to="/admin/create-code"
+              className="nav-link"
+              style={{ color: "white" }}
+            >
+              PromoCodes
+            </Link>
+          </ListGroup.Item>
         </ListGroup>
       </div>
     </>

@@ -12,18 +12,21 @@ const MyNavbar = ({ handleShow }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cartReducer);
+  // const token = useSelector((state) => state.userReducer.accessToken);
 
   console.log("cart is ", cart);
 
   const logOut = () => {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("user");
+    // localStorage.removeItem("accessToken");
+    // localStorage.removeItem("user");
+    dispatch({ type: "ADD_TO_CART", payload: [] });
+    localStorage.removeItem("cart");
     dispatch({ type: "LOGOUT", payload: null });
     navigate("/");
   };
 
   return (
-    <Navbar bg="dark" expand="sm" className="px-0 py-0" sticky="top">
+    <Navbar bg="dark" expand="sm" className="px-0 pe-5" sticky="top">
       <Container fluid>
         <Navbar.Brand href="#" className="mr-5">
           <Link to={"/"} style={{ textDecoration: "none" }}>
@@ -53,12 +56,14 @@ const MyNavbar = ({ handleShow }) => {
         </Navbar.Collapse>
 
         <div className="d-flex flex-column align-items-center px-1 ml-3 position-relative ">
-          <Link to={"/cart"}>
-            <BsCartPlus className="navIcons " />
-            <Badge bg="danger" className="cartBadge">
-              {cart.length}
-            </Badge>
-          </Link>
+          {
+            <Link to={"/cart"}>
+              <BsCartPlus className="navIcons " />
+              <Badge bg="danger" className="cartBadge">
+                {cart.length}
+              </Badge>
+            </Link>
+          }
         </div>
         <NavDropdown
           title={<BsPersonCircle className="navIcons" />}

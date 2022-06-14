@@ -26,6 +26,7 @@ import SearchPage from "./pages/SearchPage";
 import Cart from "./pages/Cart";
 import OffCanvasCart from "./components/OffCanvasCart";
 import CheckOut from "./pages/CheckOut";
+import CreateCodePage from "./pages/Admin/CreateCodePage";
 
 const App = () => {
   const [show, setShow] = useState(false);
@@ -65,6 +66,7 @@ const App = () => {
           <Route path="/admin/category" element={<AdminCategory />} />
           <Route path="/admin/add-edit-products" element={<ProductCreate />} />
           <Route path="/admin/all-products" element={<AdminAllProducts />} />
+          <Route path="/admin/create-code" element={<CreateCodePage />} />
           <Route path="/admin/product/:slug" element={<AdminProductEdit />} />
           <Route path="/category/:slug" element={<CategoryFilter />} />
           <Route path="/subcategory/:slug" element={<SubcategoryFilter />} />

@@ -21,10 +21,6 @@ const OffCanvas = ({ show, handleClose }) => {
     });
     getSubs().then((sub) => {
       setSubcategories(sub.data);
-      console.log(
-        "🚀 ~ file: OffCanvas.jsx ~ line 21 ~ getSubs ~ sub.data",
-        sub.data
-      );
     });
   }, []);
   const handleAdvancedFilter = () => {

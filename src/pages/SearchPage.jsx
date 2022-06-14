@@ -68,7 +68,6 @@ export const SearchPage = () => {
   const loadAllProducts = () => {
     getProducts(12).then((p) => {
       setProducts(p.data);
-      // console.log("🚀 ~ file: Shop.jsx ~ line 21 ~ getProducts.then ~ p.data", p.data)
       setLoading(false);
     });
   };

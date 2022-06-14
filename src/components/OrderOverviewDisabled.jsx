@@ -13,6 +13,7 @@ const OrderOverviewDisabled = ({
   total,
   address,
   setAddressSaved,
+  totalAfterDiscount,
 }) => {
   let dispatch = useDispatch();
   let navigate = useNavigate();
@@ -89,7 +90,23 @@ const OrderOverviewDisabled = ({
           <p className="SummaryTotalPrice my-0">€ {total}</p>
         </Badge>
       </ListGroup.Item>
-      <hr />
+      {totalAfterDiscount > 0 ? (
+        <ListGroup.Item
+          as="li"
+          className="d-flex justify-content-between align-items-start"
+        >
+          <div className="ms-2 me-auto">
+            <div className="fw-bold">
+              <p className="my-0 SummaryPrice">After Discount:</p>
+            </div>
+          </div>
+          <Badge bg="primary" pill>
+            <p className="SummaryTotalPrice my-0">€ {totalAfterDiscount}</p>
+          </Badge>
+        </ListGroup.Item>
+      ) : (
+        <></>
+      )}
 
       <Row>
         <Col sm={6}>

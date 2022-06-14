@@ -70,7 +70,6 @@ const SearchPage = () => {
   const loadAllProducts = () => {
     getProducts().then((p) => {
       setProducts(p.data);
-      // console.log("🚀 ~ file: Shop.jsx ~ line 21 ~ getProducts.then ~ p.data", p.data)
       setLoading(false);
     });
   };
