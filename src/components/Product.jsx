@@ -143,36 +143,43 @@ const Product = () => {
                   <div className="sideInfoList">Shipping :</div>
                   <div className="sideInfoList">{product.shipping}</div>
                 </ListGroup.Item>
-                <ListGroup.Item className="d-flex justify-content-between">
-                  <div className="sideInfoList">Available :</div>
-                  <div className="sideInfoList">{product.quantity}</div>
-                </ListGroup.Item>
+
+                {product.quantity < 1 ? (
+                  <ListGroup.Item className="d-flex justify-content-center">
+                    <div className="sideInfoList2">SOLD OUT !!!</div>
+                  </ListGroup.Item>
+                ) : (
+                  <ListGroup.Item className="d-flex justify-content-between">
+                    <div className="sideInfoList">Available :</div>
+                    <div className="sideInfoList">{product.quantity}</div>
+                  </ListGroup.Item>
+                )}
               </ListGroup>
               <div className="d-flex justify-content-center mt-3"></div>
               <hr />
               <div className="d-flex justify-content-center my-3">
                 <h2>{product.price},-</h2>
               </div>
-              <hr />
             </div>
 
             <div className=" mt-auto">
               <div className="d-flex justify-content-between align-items-center">
-                <Tooltip title={tooltip}>
-                  <button
-                    className="addToCart bg-dark py-2 px-3 "
-                    onClick={handleAddToCart}
-                  >
+                <button
+                  className="addToCart bg-dark py-2 px-5 "
+                  onClick={handleAddToCart}
+                  disabled={product.quantity < 1}
+                >
+                  <Tooltip title={tooltip}>
                     <BsCartPlus style={{ width: "2rem", height: "2rem" }} />
-                  </button>
-                </Tooltip>
+                  </Tooltip>
+                </button>
 
-                <button className="addToCart bg-dark py-2 px-3 ">
+                <button className="addToCart bg-dark py-2 px-5 ">
                   <BsHeart style={{ width: "2rem", height: "2rem" }} />
                 </button>
 
                 <button
-                  className="addToCart bg-dark py-2 px-3"
+                  className="addToCart bg-dark py-2 px-5"
                   onClick={() => setShow(true)}
                 >
                   <RiStarLine

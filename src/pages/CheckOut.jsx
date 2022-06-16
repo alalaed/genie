@@ -1,4 +1,4 @@
-import { Button, Col, Container, Row, InputGroup, Form } from "react-bootstrap";
+import { Button, Col, Container, Row, Form } from "react-bootstrap";
 import { getUserCart } from "../utils/userCart";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -48,7 +48,7 @@ const CheckOut = () => {
         if (res.data) {
           setTotalAfterDiscount(res.data.totalAfterDiscount);
           dispatch({
-            type: "COUPON_APPLIED",
+            type: "PROMOCODE_APPLIED",
             payload: true,
           });
         }
@@ -59,7 +59,7 @@ const CheckOut = () => {
       .catch((err) => {
         setDiscountError(err);
         dispatch({
-          type: "COUPON_APPLIED",
+          type: "PROMOCODE_APPLIED",
           payload: false,
         });
       });

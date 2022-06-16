@@ -52,6 +52,15 @@ const AdminSidebar = () => {
               PromoCodes
             </Link>
           </ListGroup.Item>
+          <ListGroup.Item className="bg-dark px-0" style={{ color: "white" }}>
+            <Link
+              to="/admin/orderStatus"
+              className="nav-link"
+              style={{ color: "white" }}
+            >
+              Orders
+            </Link>
+          </ListGroup.Item>
         </ListGroup>
       </div>
     </>

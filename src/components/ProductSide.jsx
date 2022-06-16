@@ -15,7 +15,7 @@ const ProductSide = () => {
       <div className=" mt-auto">
         <hr />
         <div className="d-flex justify-content-between">
-          <button className="addToCart bg-dark py-2 px-3 ">
+          <button className="addToCart bg-dark py-2 px-4 ">
             Add to Basket{" "}
             <BsCartPlus style={{ width: "2rem", height: "2rem" }} />
           </button>

@@ -82,12 +82,12 @@ const LoginModal = ({ handleClose }) => {
         <Button variant="dark" type="submit" className="w-100">
           Login
         </Button>
-        <Button variant="danger" type="submit" className="w-100 mt-3">
+        {/* <Button variant="danger" type="submit" className="w-100 mt-3">
           <div className="d-flex justify-content-center align-items-center">
             <SiGoogle className="mr-3" />
             <div>Login with Google</div>
           </div>
-        </Button>
+        </Button> */}
       </Form>
     </Container>
   );

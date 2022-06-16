@@ -48,12 +48,12 @@ const OrderOverview = () => {
           className="d-flex justify-content-between px-0"
         >
           <Row className=" w-100 ms-2 me-auto d-flex justify-content-between">
-            <Col md={7}>
+            <Col md={6}>
               <span className="summaryTitle">{c.title}</span>
             </Col>
-            <Col md={2}>
+            <Col md={3}>
               <span>
-                {c.price} x{c.count}
+                €{c.price} <span className="ms-2">x{c.count}</span>
               </span>
             </Col>
             <Col md={3} className="d-flex flex-column align-items-end">

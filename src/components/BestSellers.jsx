@@ -25,11 +25,14 @@ const BestSellers = () => {
                 to={`/product/${data.slug}`}
                 style={{ textDecoration: "none" }}
               >
-                <img
-                  src={data.images[0].url}
-                  className="salePic rounded border border-secondary px-3 shadow"
-                  alt=""
-                />
+                <div className="salePicContainer d-flex justify-content-center flex-column align-items-center rounded border border-secondary shadow ">
+                  <img
+                    src={data.images[0].url}
+                    className="salePic px-3 py-3 "
+                    alt=""
+                  />
+                  <p>{data.title}</p>
+                </div>
               </Link>
             </Col>
           );

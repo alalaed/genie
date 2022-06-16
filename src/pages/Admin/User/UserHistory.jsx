@@ -78,7 +78,7 @@ const UserHistory = () => {
         </Col>
         <Col md={10}>
           {orders.length < 1 ? (
-            <div className="d-flex justify-content-center align-items-center">
+            <div className="d-flex justify-content-center align-items-center mt-5">
               <h3>
                 No purchases yet!{" "}
                 <Link to={"/"}>

@@ -28,6 +28,8 @@ import OffCanvasCart from "./components/OffCanvasCart";
 import CheckOut from "./pages/CheckOut";
 import CreateCodePage from "./pages/Admin/CreateCodePage";
 import PaymentPage from "./pages/PaymentPage";
+import UserHistory from "./pages/Admin/User/UserHistory";
+import AdminStatus from "./pages/Admin/AdminStatus";
 
 const App = () => {
   const [show, setShow] = useState(false);
@@ -67,6 +69,7 @@ const App = () => {
           <Route path="/admin/category" element={<AdminCategory />} />
           <Route path="/admin/add-edit-products" element={<ProductCreate />} />
           <Route path="/admin/all-products" element={<AdminAllProducts />} />
+          <Route path="/admin/orderStatus" element={<AdminStatus />} />
           <Route path="/admin/create-code" element={<CreateCodePage />} />
           <Route path="/admin/product/:slug" element={<AdminProductEdit />} />
           <Route path="/category/:slug" element={<CategoryFilter />} />
@@ -75,6 +78,7 @@ const App = () => {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<CheckOut />} />
           <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/user/history" element={<UserHistory />} />
         </Routes>
         <OffCanvasCart />
         <div className="mt-auto">

@@ -104,23 +104,27 @@ const SummaryTable = ({ c, i }) => {
         </Col>
         <Col
           md={1}
-          className="d-flex justify-content-center border align-items-center"
+          className="d-flex justify-content-center border align-items-center px-0"
         >
           <td>
             {c.shipping === "Yes" ? (
-              <TiTick style={{ color: "green" }} />
+              <TiTick style={{ color: "green" }} className="summarySvg" />
             ) : (
-              <TiDeleteOutline style={{ color: "red" }} />
+              <TiDeleteOutline
+                style={{ color: "red" }}
+                className="summarySvg"
+              />
             )}
           </td>
         </Col>
         <Col
           md={1}
-          className="d-flex justify-content-center border align-items-center"
+          className="d-flex justify-content-center border align-items-center px-0"
         >
           <td>
             <AiFillCloseCircle
-              style={{ color: "red" }}
+              className="summarySvg"
+              style={{ color: "red", width: "4rem" }}
               onClick={handleDelete}
             />
           </td>

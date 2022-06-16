@@ -78,7 +78,7 @@ const MyNavbar = ({ handleShow }) => {
             <>
               <NavDropdown.Item>
                 {user === "User" && (
-                  <Link to="/user-dashboard" style={{ color: "black" }}>
+                  <Link to="/user/history" style={{ color: "black" }}>
                     Dashboard
                   </Link>
                 )}
