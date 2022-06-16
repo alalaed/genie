@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { TiTick, TiDeleteOutline } from "react-icons/ti";
 
-import ShowPaymentInfo from "../../../components/ShowPaymentInfo";
+import ShowStatusInfo from "../../../components/ShowStatusInfo";
 
 const UserHistory = () => {
   const [orders, setOrders] = useState([]);
@@ -20,7 +20,7 @@ const UserHistory = () => {
   const loadOrders = () => {
     getUserOrders(token).then((res) => {
       setOrders(res.data);
-      console.log(res);
+      console.log(res.data);
     });
   };
 
@@ -62,8 +62,8 @@ const UserHistory = () => {
 
   const showEachOrders = () =>
     orders.map((order, i) => (
-      <div key={i} className="m-5 p-3 card">
-        <ShowPaymentInfo order={order} />
+      <div key={i} className="m-5 p-3 border ">
+        <ShowStatusInfo order={order} />
         {showOrderInTable(order)}
         {/* <div className="row">
           <div className="col"></div>

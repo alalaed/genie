@@ -34,8 +34,10 @@ const AdminStatus = () => {
           <AdminSidebar />
         </Col>
         <Col md={10}>
-          <h3>All Orders</h3>
-          <Orders orders={orders} handleStatusChange={handleStatusChange} />
+          <Container className="mt-5">
+            <h3>All Orders</h3>
+            <Orders orders={orders} handleStatusChange={handleStatusChange} />
+          </Container>
         </Col>
       </Row>
     </Container>

@@ -45,14 +45,15 @@ const Orders = ({ orders, handleStatusChange }) => {
     <>
       {orders.map((order) => (
         <Row key={order._id} className="pb-5">
-          <Button className="btn-block bg-light">
-            <ShowPaymentInfo order={order} showStatus={false} />
-
+          <div className="bg-light border px-4 py-2">
             <Row className="">
-              <Col md={4} className="">
-                Delivery Status
+              <Col className="d-flex align-items-center">
+                <ShowPaymentInfo order={order} />
+                <h5 className="ms-2">Payment Info</h5>
               </Col>
-              <Col md={8} className="">
+              <Col md={4} className="text-black"></Col>
+              <Col md={4} className="">
+                <h5>Update Delivery Status</h5>
                 <select
                   onChange={(e) =>
                     handleStatusChange(order._id, e.target.value)
@@ -61,7 +62,9 @@ const Orders = ({ orders, handleStatusChange }) => {
                   defaultValue={order.orderStatus}
                   name="status"
                 >
-                  <option value="Not Processed">Not Processed</option>
+                  <option value="Not Processed">
+                    <h5>Not Processed</h5>
+                  </option>
                   <option value="Processing">Processing</option>
                   <option value="Dispatched">Dispatched</option>
                   <option value="Cancelled">Cancelled</option>
@@ -69,7 +72,7 @@ const Orders = ({ orders, handleStatusChange }) => {
                 </select>
               </Col>
             </Row>
-          </Button>
+          </div>
 
           {showOrderInTable(order)}
         </Row>
