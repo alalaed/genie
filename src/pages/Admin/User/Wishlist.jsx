@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { BsTrash } from "react-icons/bs";
 import { getWishlistProducts } from "../../../utils/userCart";
+import FavoriteSlot from "../../../components/FavoriteSlot";
 
 import ProductsListSlot from "../../../components/ProductsListSlot";
 
@@ -41,29 +42,32 @@ const Wishlist = () => {
         </Col>
         <Col md={10} className="px-5 mt-5">
           <h4>Favourites</h4>
-
-          {wishlist?.map((p) => (
-            <ProductsListSlot
-              title={p.title}
-              image={p.images[0].url}
-              key={p._id}
-              price={p.price}
-              description={p.description}
-              id={p._id}
-              handleRemove={handleRemove}
-              token={token}
-              slug={p.slug}
-            />
-            // <div key={p._id} className="alert alert-secondary">
-            //   <Link to={`/product/${p.slug}`}>{p.title}</Link>
-            //   <span
-            //     onClick={() => handleRemove(p._id)}
-            //     className="btn btn-sm float-right"
-            //   >
-            //     <BsTrash className="text-danger" />
-            //   </span>
-            // </div>
-          ))}
+          <Row>
+            <Col md={3}>
+              {wishlist?.map((p) => (
+                <FavoriteSlot
+                  title={p.title}
+                  image={p.images[0].url}
+                  key={p._id}
+                  price={p.price}
+                  description={p.description}
+                  id={p._id}
+                  handleRemove={handleRemove}
+                  token={token}
+                  slug={p.slug}
+                />
+                // <div key={p._id} className="alert alert-secondary">
+                //   <Link to={`/product/${p.slug}`}>{p.title}</Link>
+                //   <span
+                //     onClick={() => handleRemove(p._id)}
+                //     className="btn btn-sm float-right"
+                //   >
+                //     <BsTrash className="text-danger" />
+                //   </span>
+                // </div>
+              ))}
+            </Col>
+          </Row>
         </Col>
       </Row>
     </Container>

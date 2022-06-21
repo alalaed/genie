@@ -30,11 +30,11 @@ const AdminStatus = () => {
   return (
     <Container fluid>
       <Row>
-        <Col md={2} className="d-none d-md-block px-0 mt-5">
+        <Col md={2} className="d-none d-md-block px-0 ">
           <AdminSidebar />
         </Col>
         <Col md={10}>
-          <Container className="mt-5">
+          <Container>
             <h3>All Orders</h3>
             <Orders orders={orders} handleStatusChange={handleStatusChange} />
           </Container>

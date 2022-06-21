@@ -12,7 +12,7 @@ const UserSidebar = () => {
               className="nav-link"
               style={{ color: "white" }}
             >
-              Profile
+              History
             </Link>
           </ListGroup.Item>
 
@@ -22,7 +22,7 @@ const UserSidebar = () => {
               className="nav-link"
               style={{ color: "white" }}
             >
-              History
+              Wishlist
             </Link>
           </ListGroup.Item>
         </ListGroup>
