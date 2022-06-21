@@ -30,7 +30,7 @@ const AdminStatus = () => {
   return (
     <Container fluid>
       <Row>
-        <Col md={2} className="d-none d-md-block px-0">
+        <Col md={2} className="d-none d-md-block px-0 mt-5">
           <AdminSidebar />
         </Col>
         <Col md={10}>
