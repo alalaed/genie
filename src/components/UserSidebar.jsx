@@ -18,11 +18,11 @@ const UserSidebar = () => {
 
           <ListGroup.Item className="bg-dark px-0" style={{ color: "white" }}>
             <Link
-              to="/user/wishlist"
+              to="/user/history"
               className="nav-link"
               style={{ color: "white" }}
             >
-              Favorites
+              History
             </Link>
           </ListGroup.Item>
         </ListGroup>

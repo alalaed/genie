@@ -1,9 +1,8 @@
 import UserSidebar from "../../../components/UserSidebar";
-import { Container, Row, Col, Table } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { getUserOrders } from "../../../utils/userCart";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import { TiTick, TiDeleteOutline } from "react-icons/ti";
 
