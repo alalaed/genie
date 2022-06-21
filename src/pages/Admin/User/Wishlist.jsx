@@ -43,26 +43,26 @@ const Wishlist = () => {
           <h4>Favourites</h4>
 
           {wishlist?.map((p) => (
-            // <ProductsListSlot
-            //   title={p.title}
-            //   //   image={p.images[0].url}
-            //   key={p._id}
-            //   price={p.price}
-            //   description={p.description}
-            //   id={p._id}
-            //   handleRemove={handleRemove}
-            //   token={token}
-            //   slug={p.slug}
-            // />
-            <div key={p._id} className="alert alert-secondary">
-              <Link to={`/product/${p.slug}`}>{p.title}</Link>
-              <span
-                onClick={() => handleRemove(p._id)}
-                className="btn btn-sm float-right"
-              >
-                <BsTrash className="text-danger" />
-              </span>
-            </div>
+            <ProductsListSlot
+              title={p.title}
+              image={p.images[0].url}
+              key={p._id}
+              price={p.price}
+              description={p.description}
+              id={p._id}
+              handleRemove={handleRemove}
+              token={token}
+              slug={p.slug}
+            />
+            // <div key={p._id} className="alert alert-secondary">
+            //   <Link to={`/product/${p.slug}`}>{p.title}</Link>
+            //   <span
+            //     onClick={() => handleRemove(p._id)}
+            //     className="btn btn-sm float-right"
+            //   >
+            //     <BsTrash className="text-danger" />
+            //   </span>
+            // </div>
           ))}
         </Col>
       </Row>

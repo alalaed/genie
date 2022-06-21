@@ -8,7 +8,7 @@ const UserSidebar = () => {
         <ListGroup className="w-100">
           <ListGroup.Item className="bg-dark px-0" style={{ color: "white" }}>
             <Link
-              to="/user/profile"
+              to="/user/history"
               className="nav-link"
               style={{ color: "white" }}
             >
@@ -18,7 +18,7 @@ const UserSidebar = () => {
 
           <ListGroup.Item className="bg-dark px-0" style={{ color: "white" }}>
             <Link
-              to="/user/history"
+              to="/user/wishlist"
               className="nav-link"
               style={{ color: "white" }}
             >
