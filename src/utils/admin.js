@@ -1,7 +1,7 @@
 import axios from "axios";
 
+// await axios.get(`http://localhost:3001/admin/orders`, {
 export const getOrders = async (token) =>
-  // await axios.get(`http://localhost:3001/admin/orders`, {
   await axios.get(`${process.env.REACT_APP_BACKEND_URL}/admin/oders`, {
     headers: {
       authorization: token,
