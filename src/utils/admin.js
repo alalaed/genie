@@ -2,7 +2,7 @@ import axios from "axios";
 
 // await axios.get(`http://localhost:3001/admin/orders`, {
 export const getOrders = async (token) =>
-  await axios.get(`${process.env.REACT_APP_BACKEND_URL}/admin/oders`, {
+  await axios.get(`${process.env.REACT_APP_BACKEND_URL}/admin/orders`, {
     headers: {
       authorization: token,
     },
@@ -11,7 +11,7 @@ export const getOrders = async (token) =>
 export const changeOrderStatus = async (orderId, orderStatus, token) =>
   await axios.put(
     // `http://localhost:3001/admin/order-status`,
-    `${process.env.REACT_APP_BACKEND_URL}/admin/oder-status`,
+    `${process.env.REACT_APP_BACKEND_URL}/admin/order-status`,
 
     { orderId, orderStatus },
     {
