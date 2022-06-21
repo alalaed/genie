@@ -30,6 +30,7 @@ import CreateCodePage from "./pages/Admin/CreateCodePage";
 import PaymentPage from "./pages/PaymentPage";
 import UserHistory from "./pages/Admin/User/UserHistory";
 import AdminStatus from "./pages/Admin/AdminStatus";
+import Wishlist from "./pages/Admin/User/Wishlist";
 
 const App = () => {
   const [show, setShow] = useState(false);
@@ -37,7 +38,7 @@ const App = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const cart = useSelector((state) => state.cartReducer);
+  // const cart = useSelector((state) => state.cartReducer);
 
   return (
     <BrowserRouter>
@@ -79,6 +80,7 @@ const App = () => {
           <Route path="/checkout" element={<CheckOut />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/user/history" element={<UserHistory />} />
+          <Route path="/user/wishlist" element={<Wishlist />} />
         </Routes>
         <OffCanvasCart />
         <div className="mt-auto">

@@ -1,14 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Form, Button, Container, Spinner } from "react-bootstrap";
-import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { SiGoogle } from "react-icons/si";
 import { loginUser } from "../redux/actions";
 import { validateInputs } from "../utils/validateInputs";
 
 const LoginModal = ({ handleClose }) => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [email, setEmail] = useState("");
@@ -16,7 +12,6 @@ const LoginModal = ({ handleClose }) => {
   const [loading, setLoading] = useState(false);
 
   const userData = { email, password };
-  const user = useSelector((state) => state.userReducer?.user.role);
 
   const handleSubmit = async (e) => {
     try {
@@ -33,14 +28,6 @@ const LoginModal = ({ handleClose }) => {
       setLoading(false);
     }
   };
-
-  //   useEffect(() => {
-  //     if (user === "Admin") {
-  //       navigate("/");
-  //     } else if (user === "User") {
-  //       navigate("/");
-  //     }
-  //   }, [user]);
 
   return (
     <Container className="w-100 ">

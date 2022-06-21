@@ -66,7 +66,7 @@ const CheckOut = () => {
   };
 
   return (
-    <Container fluid className="mt-3">
+    <Container fluid className="mt-5 px-5">
       <Row>
         <Col md={6}>
           <Form onSubmit={saveAddressInDb}>
@@ -80,16 +80,18 @@ const CheckOut = () => {
                 autoFocus
                 required
               />
-              <br />
-              <Button onClick={saveAddressInDb} className="btn btn-primary">
+
+              <Button
+                onClick={saveAddressInDb}
+                className="btn btn-primary mt-2"
+              >
                 Save
               </Button>
-              <hr />
             </Form.Group>
           </Form>
-          <hr />
+
           <h4> Enter Promo Code?</h4>
-          <br />
+
           <Form onSubmit={sendCode}>
             <Form.Group>
               <Form.Control
@@ -102,12 +104,11 @@ const CheckOut = () => {
                 value={code}
                 required
               />
-              <br />
+
               {discountError && <p className="bg-danger"> Invalid Code</p>}
-              <Button onClick={sendCode} className="btn btn-primary">
+              <Button onClick={sendCode} className="btn btn-primary mt-2">
                 Apply
               </Button>
-              <hr />
             </Form.Group>
           </Form>
         </Col>

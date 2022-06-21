@@ -305,3 +305,16 @@ button:hover {
   height: 1.5rem;
   width: 1.5rem;
 }
+
+.found {
+  font-size: 2rem;
+}
+
+.lok {
+  color: radial-gradient(
+    circle,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(16, 16, 232, 1) 51%,
+    rgba(0, 212, 255, 1) 100%
+  );
+}

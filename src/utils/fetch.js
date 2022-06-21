@@ -3,13 +3,17 @@ import "react-toastify/dist/ReactToastify.css";
 
 export const registerUser = async (user) => {
   try {
-    const res = await fetch(`http://localhost:3001/users/register`, {
-      method: "POST",
-      body: JSON.stringify(user),
-      headers: {
-        "Content-type": "application/json",
-      },
-    });
+    // const res = await fetch(`http://localhost:3001/users/register`, {
+    const res = await fetch(
+      `${process.env.REACT_APP_BACKEND_URL}/users/register`,
+      {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers: {
+          "Content-type": "application/json",
+        },
+      }
+    );
     const { _id } = await res.json();
     console.log("_id:", _id);
     toastSuccess("Thanks for registering");
@@ -22,7 +26,8 @@ export const registerUser = async (user) => {
 
 export const updateUser = async (user, token) => {
   try {
-    const res = await fetch(`http://localhost:3001/users/me`, {
+    // const res = await fetch(`http://localhost:3001/users/me`, {
+    const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/users/me`, {
       method: "PUT",
       body: JSON.stringify(user),
       headers: {

@@ -4,13 +4,17 @@ import "react-toastify/dist/ReactToastify.css";
 export const loginUser = (userData) => {
   return async (dispatch) => {
     try {
-      const res = await fetch("http://localhost:3001/users/login", {
-        method: "POST",
-        body: JSON.stringify(userData),
-        headers: {
-          "Content-type": "application/json",
-        },
-      });
+      // const res = await fetch("http://localhost:3001/users/login", {
+      const res = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/users/login`,
+        {
+          method: "POST",
+          body: JSON.stringify(userData),
+          headers: {
+            "Content-type": "application/json",
+          },
+        }
+      );
       if (res.ok) {
         const { user, accessToken } = await res.json();
         console.log("user:", user);

@@ -15,9 +15,13 @@ import { average } from "../utils/averageRating";
 import { getRelatedProducts } from "../utils/productCreate";
 import _ from "lodash";
 import { Tooltip } from "antd";
+import { addToWishlist } from "../utils/userCart";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Product = () => {
   let params = useParams();
+  let navigate = useNavigate();
 
   const [product, setProduct] = useState({});
   const initState = { publicUrl: "", url: "" };
@@ -94,6 +98,24 @@ const Product = () => {
         type: "SET_VISIBLE",
         payload: true,
       });
+    }
+  };
+  const handleAddToWishlist = () => {
+    if (token) {
+      console.log(
+        "🚀 ~ file: SingleProduct.jsx ~ line 60 ~ addToWishlist ~ token",
+        token
+      );
+      addToWishlist(product._id, token).then((res) => {
+        console.log(
+          "🚀 ~ file: SingleProduct.jsx ~ line 68 ~ addToWishlist ~ addedToWishlist",
+          res.data
+        );
+        toast.success("Added to wishlist");
+      });
+    } else {
+      //  TODO implement modal for login
+      navigate("/login");
     }
   };
 
@@ -174,7 +196,10 @@ const Product = () => {
                   </Tooltip>
                 </button>
 
-                <button className="addToCart bg-dark py-2 px-5 ">
+                <button
+                  className="addToCart bg-dark py-2 px-5 "
+                  onClick={handleAddToWishlist}
+                >
                   <BsHeart style={{ width: "2rem", height: "2rem" }} />
                 </button>
 

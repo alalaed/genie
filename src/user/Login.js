@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Form, Button, Container, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { SiGoogle } from "react-icons/si";
 import { loginUser } from "../redux/actions";
 import { validateInputs } from "../utils/validateInputs";
 
@@ -41,7 +40,7 @@ const Login = () => {
   }, [user]);
 
   return (
-    <Container className="w-50 mt-5">
+    <Container className="w-25 mt-5 shadow px-3 py-3">
       {loading ? (
         <Container className="d-flex w-100 justify-content-center">
           <Spinner animation="grow" className="mx-4" />
@@ -80,12 +79,12 @@ const Login = () => {
         <Button variant="dark" type="submit" className="w-100">
           Login
         </Button>
-        <Button variant="danger" type="submit" className="w-100 mt-3">
+        {/* <Button variant="danger" type="submit" className="w-100 mt-3">
           <div className="d-flex justify-content-center align-items-center">
             <SiGoogle className="mr-3" />
             <div>Login with Google</div>
           </div>
-        </Button>
+        </Button> */}
       </Form>
     </Container>
   );

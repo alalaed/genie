@@ -67,7 +67,7 @@ const OrderOverviewDisabled = ({
           </Row>
         </ListGroup.Item>
       ))}
-      <hr />
+
       <ListGroup.Item
         as="li"
         className="d-flex justify-content-between align-items-start"
@@ -103,7 +103,7 @@ const OrderOverviewDisabled = ({
         <Col sm={6}>
           <Button
             variant="success"
-            className="w-100"
+            className="w-100 mt-2"
             onClick={() => navigate("/payment")}
           >
             Place Order
@@ -112,7 +112,7 @@ const OrderOverviewDisabled = ({
         <Col sm={6}>
           <Button
             variant="danger"
-            className="w-100"
+            className="w-100 mt-2"
             onClick={emptyCart}
             disabled={!products.length}
           >

@@ -31,7 +31,8 @@ const FileUpload = ({ values, setValues, setLoading }) => {
           (uri) => {
             axios
               .post(
-                "http://localhost:3001/cloudinary/uploadImages",
+                `${process.env.REACT_APP_BACKEND_URL}/cloudinary/uploadImages`,
+                // "http://localhost:3001/cloudinary/uploadImages",
                 { image: uri },
                 {
                   headers: {
@@ -61,7 +62,8 @@ const FileUpload = ({ values, setValues, setLoading }) => {
     setLoading(true);
     axios
       .post(
-        "http://localhost:3001/cloudinary/removeImage",
+        `${process.env.REACT_APP_BACKEND_URL}/cloudinary/removeImage`,
+        // "http://localhost:3001/cloudinary/removeImage",
         { id },
         { headers: { authorization: token ? token : "" } }
       )

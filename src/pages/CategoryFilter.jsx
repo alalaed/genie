@@ -1,5 +1,5 @@
 import { getCategory } from "../utils/category";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Container, Row, Col, Table, Spinner } from "react-bootstrap";
 import ProductFilterCard from "../components/ProductFilterCard";
@@ -21,7 +21,7 @@ const CategoryFilter = () => {
   }, [params.slug]);
 
   return (
-    <Table striped bordered hover>
+    <Table striped bordered hover className="mt-5">
       <tbody>
         {loading ? (
           <Container className="d-flex w-100 justify-content-center my-3">
@@ -36,9 +36,9 @@ const CategoryFilter = () => {
               <h4> Sorry, no products are found! </h4>
             ) : (
               <h4>
-                Found {products.length}{" "}
-                {products.length === 1 ? "Product" : "Products"} in "
-                {category.name}".
+                Found <span className="found">" {products.length} "</span>{" "}
+                {products.length === 1 ? "Product" : "Products"} in "{" "}
+                <span className="found">{category.name}</span> ".
               </h4>
             )}
             <Row>

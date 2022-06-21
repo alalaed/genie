@@ -64,7 +64,7 @@ const OrderOverview = () => {
           </Row>
         </ListGroup.Item>
       ))}
-      <hr />
+
       <ListGroup.Item
         as="li"
         className="d-flex justify-content-between align-items-start"
@@ -78,14 +78,15 @@ const OrderOverview = () => {
           <p className="SummaryTotalPrice my-0">€ {getTotal()}</p>
         </Badge>
       </ListGroup.Item>
-      <hr />
 
       {user ? (
-        <Button onClick={saveOrder} disabled={!cart.length}>
+        <Button onClick={saveOrder} disabled={!cart.length} className="mt-2">
           Proceed to CheckOut
         </Button>
       ) : (
-        <Button onClick={handleShow}>Login to continue shopping</Button>
+        <Button className="mt-2" onClick={handleShow}>
+          Login to continue shopping
+        </Button>
       )}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
