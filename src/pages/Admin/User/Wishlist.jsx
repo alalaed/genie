@@ -43,8 +43,8 @@ const Wishlist = () => {
         <Col md={10} className="px-5 mt-5">
           <h4>Favourites</h4>
           <Row>
-            <Col md={3}>
-              {wishlist?.map((p) => (
+            {wishlist?.map((p) => (
+              <Col md={3}>
                 <FavoriteSlot
                   title={p.title}
                   image={p.images[0].url}
@@ -52,21 +52,12 @@ const Wishlist = () => {
                   price={p.price}
                   description={p.description}
                   id={p._id}
-                  handleRemove={handleRemove}
+                  loadWishlist={loadWishlist}
                   token={token}
                   slug={p.slug}
                 />
-                // <div key={p._id} className="alert alert-secondary">
-                //   <Link to={`/product/${p.slug}`}>{p.title}</Link>
-                //   <span
-                //     onClick={() => handleRemove(p._id)}
-                //     className="btn btn-sm float-right"
-                //   >
-                //     <BsTrash className="text-danger" />
-                //   </span>
-                // </div>
-              ))}
-            </Col>
+              </Col>
+            ))}
           </Row>
         </Col>
       </Row>

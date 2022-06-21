@@ -1,21 +1,23 @@
 import { Card, Button } from "react-bootstrap";
 import { BsTrash } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { removeFromWishlist } from "../utils/userCart";
 
 const FavoriteSlot = ({
   title,
   image,
   price,
   description,
-  handleRemove,
   id,
+  loadWishlist,
   token,
   slug,
 }) => {
-  // const handleRemove = () => {
-  //   if (window.confirm()) deleteProduct(id, token);
-  //   console.log(id);
-  // };
+  const handleRemove = (productId) =>
+    removeFromWishlist(productId, token).then((res) => {
+      console.log("i am firing");
+      loadWishlist();
+    });
   return (
     <Card className="w-100 all-product-card flex-column">
       <Card.Img variant="top" src={image} className="product-list-image mt-2" />
@@ -25,7 +27,7 @@ const FavoriteSlot = ({
       </Card.Body>
       <div className="d-flex justify-content-between align-items-center px-2 py-2">
         <div>
-          <Button variant="danger" onClick={() => handleRemove(id, token)}>
+          <Button variant="danger" onClick={() => handleRemove(id)}>
             <BsTrash />
           </Button>
         </div>
