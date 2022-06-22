@@ -19,7 +19,7 @@ const Orders = ({ orders, handleStatusChange }) => {
       </thead>
 
       <tbody>
-        {order.products.map((p, i) => (
+        {orders.products.map((p, i) => (
           <tr key={i}>
             <td>
               <b>{p.product.title}</b>
